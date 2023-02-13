@@ -1,0 +1,108 @@
+* {
+    margin: 0; 
+    padding: 0;
+}
+
+body {
+    background-color: #f9fbff;
+}
+
+#station-container {
+    width: 20vw;
+    /* height: 90vh; */
+    clear: both;
+    padding: 10vh;
+
+}
+
+#menu-stations {
+    width: 20vw;
+    /* height: 90vh; */
+    clear: both;
+    margin-left: 1vw;
+    padding-right: 1vw;
+}
+
+.text-column {
+    font-size: 13px;
+    font-weight: 800;
+    color: white;
+}
+
+.station-item {
+    font-family: 'Roboto', sans-serif;
+    border-radius: 8px;
+    box-shadow: 7px 7px 13px 0px rgba(50, 50, 50, 0.22);
+    padding: 2px;
+    margin: 6px;
+    /* margin: 0 auto; */
+    /* width: 200px; */
+    transition: all 0.3s ease-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    /* flex-grow: 1; */
+}
+
+.station-item > div {
+    /* padding: 5px; */
+    /* margin: 5px; */
+    margin: 0 auto;
+    flex-grow: 1;
+    text-align: center;
+}
+
+#interaction-container {
+    /* background-color: rgb(18, 36, 110); */
+}
+
+.icon {
+    width: 4vw;
+    height: 4vw;
+    margin: 1vh;
+    padding: 1vh;
+    background-color: rgb(18, 36, 110);
+    cursor: pointer;
+}
+
+#container {
+    display: flex;
+    vertical-align: middle;
+}
+
+/* banner */
+
+div#banner { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    background-color: #eeeedd; 
+    width: 100%; 
+}
+div#banner-content { 
+    /* width: 800px;  */
+    margin: 0 auto; 
+    padding: 10px; 
+    /* border: 1px solid #000; */
+}
+
+img#banner_img{
+    height: 5vh;
+}
+
+/* floormap */
+
+#floormap-container {
+    padding-top: 4vh;
+}
+
+#vis-container {
+    margin: 10vh;
+    width: 55vw;
+}
+
+#station-container {
+    display: inline-block;
+    text-align: right;
+}

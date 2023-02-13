@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Embedding Vega-Lite</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.6.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+  </head>
+  <body>
+    <div id="vis1"></div>
+    <div id="vis2"></div>
+
+    <script type="text/javascript">
+        let linechart = {
+            "config": {
+                "view": {"continuousWidth": 400, "continuousHeight": 300},
+                "axis": {"labelColor": "white", "titleColor": "white"},
+                "background": "#122973",
+                "header": {
+                "labelColor": "#122973",
+                "labelFontSize": 14,
+                "titleColor": "#122973",
+                "titleFontSize": 14
+                }
+            },
+            "layer": [
+                {
+                "mark": {"type": "line", "color": "gold", "size": 6},
+                "encoding": {
+                    "x": {"field": "x", "type": "quantitative"},
+                    "y": {"field": "f(x)", "type": "quantitative"}
+                }
+                },
+                {
+                "mark": {"type": "rule", "color": "red"},
+                "encoding": {
+                    "size": {"value": 6},
+                    "y": {"aggregate": "mean", "field": "f(x)", "type": "quantitative"}
+                }
+                }
+            ],
+            "data": {"name": "data-fadad5991b60cfa110381e622e2d0631"},
+            "width": 600,
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.2.0.json",
+            "datasets": {
+                "data-fadad5991b60cfa110381e622e2d0631": [
+                {"x": 0, "f(x)": 3},
+                {"x": 1, "f(x)": 0},
+                {"x": 2, "f(x)": 8},
+                {"x": 3, "f(x)": 5},
+                {"x": 4, "f(x)": 7},
+                {"x": 5, "f(x)": 3},
+                {"x": 6, "f(x)": 2},
+                {"x": 7, "f(x)": 5},
+                {"x": 8, "f(x)": 6},
+                {"x": 9, "f(x)": 1}
+                ]
+            }
+        };
+        vegaEmbed('#vis1', linechart);
+
+        let pointchart = {
+            "config": {
+                "view": {"continuousWidth": 400, "continuousHeight": 300},
+                "axis": {"labelColor": "white", "titleColor": "white"},
+                "background": "#122973",
+                "header": {
+                "labelColor": "#122973",
+                "labelFontSize": 14,
+                "titleColor": "#122973",
+                "titleFontSize": 14
+                }
+            },
+            "layer": [
+                {
+                "mark": {"type": "rule", "color": "green"},
+                "encoding": {
+                    "size": {"value": 8},
+                    "y": {"field": "e", "type": "quantitative"}
+                }
+                },
+                {
+                "mark": {"type": "point", "color": "red", "fill": "#FF0000FF"},
+                "encoding": {
+                    "size": {"value": 200},
+                    "x": {"field": "b", "type": "nominal"},
+                    "y": {
+                    "field": "a",
+                    "scale": {"domain": [0, 20]},
+                    "type": "quantitative"
+                    }
+                }
+                }
+            ],
+            "data": {"name": "data-1bd474fc15ff327eeb849c4918fd66a7"},
+            "width": 100,
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.2.0.json",
+            "datasets": {
+                "data-1bd474fc15ff327eeb849c4918fd66a7": [{"a": 18, "b": "b", "e": 12}]
+            }
+        };
+        vegaEmbed('#vis2', pointchart);
+
+
+    </script>
+  </body>
+</html>

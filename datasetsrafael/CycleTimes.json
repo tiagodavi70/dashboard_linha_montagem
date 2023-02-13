@@ -1,0 +1,12 @@
+{
+  "cycleTime": 50,
+  "exitTime": 8,
+  "processTime": 10,
+  "waitingTime": 4,
+  "id":98936,
+  "line":"10",
+  "station":"220",
+  "serialNumber":null,
+  "reference":null,
+  "timeStamp":"2023-01-30T15:13:58.2754275"
+}

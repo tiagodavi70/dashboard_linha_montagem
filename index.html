@@ -1,0 +1,113 @@
+<html>
+    <head>
+        <title> Sandbox </title>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.6.0"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
+
+        <link rel="stylesheet" type="text/css" href="style.css" /> 
+    </head>
+    <body>
+        <div id="banner">
+            <div id="banner-content">
+                <img id="banner_img" src="https://upload.wikimedia.org/wikipedia/commons/1/16/Bosch-logo.svg"/>
+            </div>
+        </div>
+        <div id="container">
+            <div id="floormap-container">
+                <object data="layout.svg" type="image/svg+xml" id="svgLoaded">
+                    <!-- <img src="yourfallback.jpg" /> -->
+                </object>
+                <div id="vis-container" style="display: none;"> 
+                    <div id="vis1" class="vis-detail"></div>
+                </div>
+                    
+                <div id="interaction-container">
+                    <!-- <div class="">
+                        Filters
+                    </div> -->
+                    <img class="icon" id="kpis_icon" src="icons/kpisWhite.png"> <img/>
+                    <img class="icon" id="close_icon" src="icons/IconClose.png"> <img/>
+                    <img class="icon" id="filter_icon" src="icons/filter.png"> <img/>
+                    <div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div id="station-container">
+                <div id="station-group" >
+                    <h1> </h1>
+                    <div id="menu-stations">
+                        <div class="station-item" style="background-color: rgb(18, 36, 110);"> 
+                            <div class="text-column">Station</div>
+                            <div class="text-column">Cycle Time</div>
+                            <div class="text-column">Bottleneck</div>
+                            <div class="text-column">KPI</div>
+                        </div>
+                        <div id="station-list"></div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    
+    <script src="app.js"></script>
+	<script type="text/javascript">
+		let margin = {top: 50, right: 50, bottom: 50, left: 50};
+		let width = window.innerWidth - margin.left - margin.right;
+		let height = window.innerHeight - margin.top - margin.bottom;
+        let stationsSelect = "";
+
+        window.onload = function() {
+            let svgObj = document.getElementById("svgLoaded");
+            let svgDoc = svgObj.contentDocument;
+            let layoutLayer = svgDoc.getElementById("layer1");
+            let stationsLayer = svgDoc.getElementById("layer2");
+
+            d3.select("#svgLoaded")
+                .attr("width", width * .7 )
+                .attr("height", height * .6 )
+            d3.select("#vis")
+                .attr("width", width * .7 )
+                .attr("height", height * .6 )
+            let layout = d3.select(layoutLayer);
+            layout
+                .style("fill", "red")
+            // layout.style("visibility", "hidden");
+            // layout.style("stroke", "green");
+            
+            stationsSelect = d3.select(stationsLayer).selectAll("rect");
+            
+            stationsSelect
+                .attr("width", function() { return d3.select(this).attr("width") * 2})
+                .attr("height", function() { return d3.select(this).attr("height") * 2})
+                .style("fill", mainColor)
+                .style("fill-opacity", .8)
+                .style("cursor", "pointer")
+                .style("transition", "all 0.3s ease-out")
+                .on("click", function(e,d) {
+                    selectStation(sn(this));
+                }).on("mouseover", function(e,d) {}).on("mouseout", function(e,d) {});
+            
+            let stations = stationsSelect.nodes();
+            let texts = d3.select(stationsLayer).selectAll("text")
+                .data(stations)
+                .join("text")
+                    .attr("x", d => +d3.select(d).attr("x") + +d3.select(d).attr("height") * .14)
+                    .attr("y", d => +d3.select(d).attr("y") + +d3.select(d).attr("width") * .64)
+                    .style("font-size", 7)
+                    .style("fill", "white")
+                    .attr("pointer-events", "none")
+                    .text(d => sn(d));
+            
+            stations = stations.sort((a,b) => +sn(a) > +sn(b)? 1:-1 );
+            createList(stations);
+        };
+        loadSpecs();
+        
+
+	</script>
+</html>

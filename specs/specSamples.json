@@ -1,0 +1,46 @@
+{
+    "config": {
+      "view": {"continuousWidth": 400, "continuousHeight": 300},
+      "axis": {"labelColor": "white", "titleColor": "white"},
+      "background": "#122973",
+      "header": {
+        "labelColor": "#122973",
+        "labelFontSize": 14,
+        "titleColor": "#122973",
+        "titleFontSize": 14
+      }
+    },
+    "layer": [
+      {
+        "mark": {"type": "line", "color": "gold", "size": 6},
+        "encoding": {
+          "x": {"field": "x", "type": "quantitative"},
+          "y": {"field": "cycleTime", "type": "quantitative"}
+        }
+      },
+      {
+        "mark": {"type": "rule", "color": "red"},
+        "encoding": {
+          "size": {"value": 6},
+          "y": {"aggregate": "mean", "field": "cycleTime", "type": "quantitative"}
+        }
+      }
+    ],
+    "data": {"name": "data-eaff3647acbe3d5c8ac94d2ff65e0292"},
+    "width": 600,
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json",
+    "datasets": {
+      "data-eaff3647acbe3d5c8ac94d2ff65e0292": [
+        {"x": 0, "cycleTime": 3},
+        {"x": 1, "cycleTime": 1},
+        {"x": 2, "cycleTime": 0},
+        {"x": 3, "cycleTime": 3},
+        {"x": 4, "cycleTime": 8},
+        {"x": 5, "cycleTime": 9},
+        {"x": 6, "cycleTime": 8},
+        {"x": 7, "cycleTime": 3},
+        {"x": 8, "cycleTime": 9},
+        {"x": 9, "cycleTime": 1}
+      ]
+    }
+  }
