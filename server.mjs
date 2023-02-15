@@ -46,7 +46,7 @@ let kpi = JSON.parse(fs.readFileSync(`./simulation/KPI.json`));
 function filter(station, list, q) {
     let filtered = list.filter(d => d.station == station);
     let data = [];
-    if (q["startDate"] != undefined || q["startDate"] != undefined) {
+    if (q["startDate"] != undefined || q["endDate"] != undefined) {
         data = filtered;
     } else {
         data = filtered[filtered.length-1];
@@ -55,27 +55,37 @@ function filter(station, list, q) {
 }
 
 // http://localhost:5500/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi/cycle-times?line=10&station=220
-// http://localhost:5500/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi/cycle-times?line=10&station=220&startDate=2022-12-02&endDate=2022-12-03
 app.get("/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi/cycle-times", (req, res) => {
     let url_query = req.query;
     let data = filter(url_query["station"], cycletimes, url_query)
-    res.send(JSON.stringify(data.length == 1? [data]:data));
+    res.send(JSON.stringify(data.length == undefined? [data] : data));
 });
 
-// http://localhost:5500/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi?line=10&station=220
-// http://localhost:5500/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi?line=10&station=220&startDate=2022-12-02&endDate=2022-12-03
-app.get("/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi", (req, res) => {
+// http://localhost:5500/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi/current-shift?line=10&station=220
+app.get("/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi/current-shift", (req, res) => {
     let url_query = req.query;
+    delete url_query.startDate
+    delete url_query.endDate
     let data = filter(url_query["station"], kpi, url_query)
     res.send(JSON.stringify(data));
 });
 
-// http://localhost:5500/it/application/api/augmanity-pps4-dummy/d/v1/api/bottlenecks/actual?line=10&station=220
-// http://localhost:5500/it/application/api/augmanity-pps4-dummy/d/v1/api/bottlenecks/actual?line=10&station=220&startDate=2022-12-02&endDate=2022-12-03
+// http://localhost:5500/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi?line=10&station=220&startDate=2022-12-02&endDate=2022-12-03
+app.get("/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi", (req, res) => {
+    let url_query = req.query;
+    if (url_query.startDate == undefined) res.send("error");
+
+    let data = filter(url_query["station"], kpi, url_query)
+    res.send(JSON.stringify(data));
+});
+
+// http://localhost:5500/it/application/api/augmanity-pps4-dummy/d/v1/api/bottlenecks/actual?line=10
 app.get("/it/application/api/augmanity-pps4-dummy/d/v1/api/bottlenecks/actual", (req, res) => {
     let url_query = req.query;
-    let data = filter(url_query["station"], bottleneck, url_query)
-    res.send(JSON.stringify(data));
+
+    // let data = filter(url_query["station"], bottleneck, url_query)
+    // if (stardate station)
+    res.send(JSON.stringify(bottleneck));
 });
 
 app.listen(port, () => {

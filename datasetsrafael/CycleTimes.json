@@ -2,7 +2,7 @@
   "totalCycleTime": 50,
   "exitTime": 8,
   "processTime": 10,
-  "waitingTime": 4,
+  "changeTime": 4,
   "id":98936,
   "line":"10",
   "station":"220",

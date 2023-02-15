@@ -16,7 +16,7 @@ let urls = ["https://ews-emea.api.bosch.com/it/application/api/augmanity-pps4-du
 // "https://ews-emea.api.bosch.com/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi/current-shift?line=10&station=260"
 // "https://ews-emea.api.bosch.com/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi/current-shift?line=10&station=260&startDate=2022-12-02&endDate=2022-12-03"
 // "https://ews-emea.api.bosch.com/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi?line=10&station=260&startDate=2022-12-02&endDate=2022-12-03"
-
+// "https://ews-emea.api.bosch.com/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi?line=10&station=260"
 
 let names = ["Bottleneck", "CycleTimes", "KPI"];
 let stations = ["15", "140", "160", "170", "200", "210", "215", "220", "225", "240", "250", "260", "270", "273", "290", "320", "320.2", "330"];
@@ -31,20 +31,20 @@ let u = btoa(`${username}:${password}`);
 
 let url1 = "https://ews-emea.api.bosch.com/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi/cycle-times?line=10&station=220";
 
-d3.json(url1, {
-    headers: {"Authorization": `Basic ${u}`}
-}).then(data => {
-    console.log(JSON.stringify(data));
-});
+// d3.json(url1, {
+//     headers: {"Authorization": `Basic ${u}`}
+// }).then(data => {
+//     console.log(JSON.stringify(data));
+// });
 
-let url = names[0];
+let url = names[0]; // bottleneck
 let bottleneck_dataset = [];
 fs.readFile(`./datasetsrafael/${url}.json`, (err, data) => {
     if (err) throw err;
     let parsed = JSON.parse(data);
     for (let index = 0 ; index < stations.length ; index++) {
         let station = stations[index];
-        for (let i = 0 ; i < 100 ; i++) {
+        for (let i = 0 ; i < 1 ; i++) {
             let obj = JSON.parse(JSON.stringify(parsed));
             for (let key of Object.keys(obj)) {
                 if ( !bottleneck_block.includes(key))
@@ -55,7 +55,7 @@ fs.readFile(`./datasetsrafael/${url}.json`, (err, data) => {
             bottleneck_dataset.push(obj);
         }
     }
-    fs.writeFile(`simulation/${url}.json`, JSON.stringify(bottleneck_dataset), (err) => {
+    fs.writeFile(`simulation/${url}.json`, JSON.stringify(bottleneck_dataset[bottleneck_dataset.length-1]), (err) => {
         if (err) throw err;
         console.log(`Data written to ${url} file.`);
         kpi()
