@@ -39,11 +39,9 @@ app.get("/api", (req, res) => {
 // "https://ews-emea.api.bosch.com/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi/current-shift?line=10&station=260"
 // "https://ews-emea.api.bosch.com/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi?line=10&station=260&startDate=2022-12-02&endDate=2022-12-03"
 
-
 let cycletimes = JSON.parse(fs.readFileSync(`./simulation/CycleTimes.json`));
 let bottleneck = JSON.parse(fs.readFileSync(`./simulation/bottleneck.json`));
 let kpi = JSON.parse(fs.readFileSync(`./simulation/KPI.json`));
-
 
 function filter(station, list, q) {
     let filtered = list.filter(d => d.station == station);
@@ -61,7 +59,7 @@ function filter(station, list, q) {
 app.get("/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi/cycle-times", (req, res) => {
     let url_query = req.query;
     let data = filter(url_query["station"], cycletimes, url_query)
-    res.send(JSON.stringify(data));
+    res.send(JSON.stringify(data.length == 1? [data]:data));
 });
 
 // http://localhost:5500/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi?line=10&station=220
