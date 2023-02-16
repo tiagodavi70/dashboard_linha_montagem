@@ -77,7 +77,7 @@ function kpi() {
                         obj[key] = d3.randomUniform(0,1)();
                 }
                 obj.station = station;
-                obj.index = index;
+                obj.index = i;
                 kpi_dataset.push(obj);
             }
         }
@@ -104,7 +104,7 @@ function cycletimes() {
                         obj[key] = d3.randomUniform(0,1)();
                 }
                 obj.station = station;
-                obj.index = index;
+                obj.index = i;
                 cycle_dataset.push(obj);
             }
         }
