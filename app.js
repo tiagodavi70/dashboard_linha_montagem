@@ -88,82 +88,15 @@ function selectStation(stationNumber) {
     } else {
 
     }
-
-    // console.log(station);
-    // if (index == truck_selected) {
-    //     clearSelection();
-    // } else {
-    //     truck_selected = index;
-    // }
-    
-    // if (truck_selected >= 0) {
-
-    // d3.select(".empty-selection").remove();
-    // d3.select("#station-list")
-    //     .selectAll(".station-item")
-    //     .style("background-color",(d,i) => i != truck_selected? "" : "DarkSlateGray");
-    // d3.select("#station-selected")
-    //     .html(/*html*/`
-    //     <div id="truck-selection" style="margin-top: 4vh">
-            
-    //         <div>
-    //             <div class="small-header">Id</div>
-    //             <div class="truck-box-text">${data[index].id}</div>
-    //         </div>
-    //         <div id="truck-icons" style="display: flex;">
-    //             <i class="fa fa-phone fa-2x"></i>
-    //             <i class="fa fa-gas-pump fa-2x"></i>
-    //             <i class="fa fa-wifi fa-2x"></i>
-    //             <i class="fas fa-map-marker-alt fa-2x"></i>
-    //         </div>
-    //         <div>
-    //             <div>
-    //                 <div class="small-header">Partida</div>
-    //                 <div class="truck-box-text" style="background-color: grey">[${data[index].lat}, ${data[index].lng}]</div>
-    //             </div>
-    //             <div>
-    //                 <div class="small-header">Chegada</div>
-    //                 <div class="truck-box-text" style="background-color: grey">[${data[index].lat}, ${data[index].lng}]</div>
-    //             </div>
-    //         </div>
-    //         <div>
-    //             <div class="small-header">Nova posição</div>
-    //             <input type="text" class="truck-box-text" id="manual-position"/>
-    //             <button id="manual-position-button"> Definir posicao </button>
-    //             <button id="map-position-button"> Definir posicao no mapa</button>
-    //             <div style="display: none; margin-top: 2vh" id="popup-manual"> Posição enviada <div>
-    //         </div>
-    //     </div>
-    //     `)
-
-    //     d3.select("#map-position-button").on("click", (e,d) => {
-    //         selectPosition = true;
-    //     });
-    // }
 }
 
 function clearSelection() {
     station_selected = -1;
 
-    // let html_empty = /*html*/`<div class="empty-selection">Selecione um caminhão <i class="fa fa-truck"></i> ao lado ou acima.</div>`
-    // d3.select("#truck-selected")
-    //     .html(html_empty);
-    // d3.select("#truck-list").selectAll(".truck-item").style("background-color", "");
 }
 
 function loadVis(vistype, attr) {
-    // function timer() {
-    //     setInterval(() => {
-    //         vegaEmbed(`#vis1`, specs[i], {}).then(result => {
-    //             result.view.addEventListener('click', function(event, item) {
-    //                 console.log('CLICK', event, item);
-    //             });
-    //         })
-    //         i++;
-    //     }, 3000);
-    // }
-    // timer();
-
+    
     function vis(spec, attr) {
         vegaEmbed("#vis1", spec, {}).then(result => {
             result.view.addEventListener('click', function(event, item) {
@@ -198,59 +131,6 @@ function loadVis(vistype, attr) {
         d3.json(url).then(data => {
             console.log(data);
         })
-
-        // d3.json(url, {crossOrigin: "anonymous", mode: "no-cors",
-        // headers: new Headers({
-        //     "Authorization": `Basic ${u}`,
-        //     'Access-Control-Allow-Credentials': 'true',
-        //     'Access-Control-Allow-Origin': '*',
-        //     // 'Access-Control-Allow-Headers': '*'
-        //   })
-        // }).then(data => {
-        //     console.log(data);
-        // });
-
-        // // now we configure the fetch request to the url endpoint.
-        // // we should probably put it inside a separate function since
-        // // you're using a browser, you probably will bind this request
-        // // to a click event or something.
-        // function login() {
-        //     return fetch(url, {
-        //         // in the case of a login request most APIs use the POST method offered by
-        //         // RESTful APIs
-        //         method: 'post', // can be 'get', 'put', 'delete', and many more
-
-        //         // now we set any needed headers specified by the API
-        //         headers: {
-        //         // most APIs I have worked with use
-        //         'Content-Type': 'application/json',
-        //         // but some might need more, they will specify anyway.
-                
-        //         },
-
-        //         // because we are using the 'post' method then we will need to add
-        //         // a body to the request with all our data, body excepts a string so
-        //         // we do the following
-        //         body: JSON.stringify({
-        //         username: username,
-        //         password: password,
-        //         }),
-        //     })
-        //     // Now we handle the response because the function returns a promise
-        //     .then((response) => {
-        //         // An important thing to note is that an error response will not throw
-        //         // an error so if the result is not okay we should throw the error
-        //         if(!response.ok) {
-        //         throw response;
-        //         }
-
-        //         // since we expect a json response we will return a json call
-        //         return response.json();
-        //     })
-        // }
-        // login().then(data => {
-        //     console.log(data);
-        // })
     }
 
     loadData();
