@@ -1,241 +1,166 @@
 {
-    "config": {
-      "view": {
-        "continuousWidth": 400,
-        "continuousHeight": 300,
-        "height": 100,
-        "strokeWidth": 0,
-        "width": 100
-      },
-      "axis": {"labelAngle": -45, "labelColor": "white", "titleColor": "white"},
-      "background": "#122973",
-      "header": {
-        "labelColor": "#122973",
-        "labelFontSize": 14,
-        "titleColor": "#122973",
-        "titleFontSize": 14
-      },
-      "legend": {
-        "labelColor": "white",
-        "padding": 1,
-        "strokeColor": "white",
-        "tickCount": 2,
-        "titleColor": "white"
-      }
+  "config": {
+    "view": {
+      "continuousWidth": 400,
+      "continuousHeight": 300,
+      "height": 100,
+      "strokeWidth": 0,
+      "width": 100
     },
-    "hconcat": [
-      {
-        "vconcat": [
-          {
-            "mark": {"type": "text", "fill": "white"},
-            "encoding": {"size": {"value": 16}, "text": {"value": "Cycle Times"}}
-          },
-          {
-            "layer": [
-              {
-                "mark": {"type": "circle", "fill": "red"},
-                "encoding": {
-                  "size": {
-                    "aggregate": "mean",
-                    "field": "cycleTime",
-                    "scale": {"range": [800, 8000]},
-                    "type": "quantitative"
-                  }
-                }
-              },
-              {
-                "mark": {"type": "text", "fill": "white"},
-                "encoding": {
-                  "text": {
-                    "aggregate": "mean",
-                    "field": "cycleTime",
-                    "format": ".4",
-                    "type": "quantitative"
-                  }
+    "axis": {"labelAngle": -45, "labelColor": "white", "titleColor": "white"},
+    "background": "#122973",
+    "header": {
+      "labelColor": "#122973",
+      "labelFontSize": 14,
+      "titleColor": "#122973",
+      "titleFontSize": 14
+    },
+    "legend": {
+      "labelColor": "white",
+      "padding": 1,
+      "strokeColor": "white",
+      "tickCount": 2,
+      "titleColor": "white"
+    }
+  },
+  "hconcat": [
+    {
+      "vconcat": [
+        {
+          "mark": {"type": "text", "fill": "white"},
+          "encoding": {"size": {"value": 16}, "text": {"value": "Cycle Times"}}
+        },
+        {
+          "layer": [
+            {
+              "mark": {"type": "circle", "fill": "red"},
+              "encoding": {
+                "size": {
+                  "aggregate": "mean",
+                  "field": "totalCycleTime",
+                  "scale": {"range": [800, 8000]},
+                  "type": "quantitative"
+                },
+                "text": {"value": "Cycle Times"}
+              }
+            },
+            {
+              "mark": {"type": "text", "fill": "white"},
+              "encoding": {
+                "text": {
+                  "aggregate": "mean",
+                  "field": "totalCycleTime",
+                  "format": ".4",
+                  "type": "quantitative"
                 }
               }
-            ]
-          }
-        ]
-      },
-      {
-        "vconcat": [
-          {
-            "mark": {"type": "text", "fill": "white"},
-            "encoding": {"size": {"value": 16}, "text": {"value": "Bottleneck"}}
-          },
-          {
-            "layer": [
-              {
-                "mark": {"type": "circle", "fill": "red"},
-                "encoding": {
-                  "size": {
-                    "aggregate": "mean",
-                    "field": "partCount",
-                    "scale": {"range": [800, 8000]},
-                    "type": "quantitative"
-                  }
-                }
-              },
-              {
-                "mark": {"type": "text", "fill": "white"},
-                "encoding": {
-                  "text": {
-                    "aggregate": "mean",
-                    "field": "partCount",
-                    "format": ".4",
-                    "type": "quantitative"
-                  }
-                }
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "vconcat": [
-          {
-            "mark": {"type": "text", "fill": "white"},
-            "encoding": {"size": {"value": 16}, "text": {"value": "KPIs"}}
-          },
-          {
-            "layer": [
-              {
-                "mark": {"type": "circle", "fill": "red"},
-                "encoding": {
-                  "size": {
-                    "aggregate": "mean",
-                    "field": "waitingTime",
-                    "scale": {"range": [800, 8000]},
-                    "type": "quantitative"
-                  }
-                }
-              },
-              {
-                "mark": {"type": "text", "fill": "white"},
-                "encoding": {
-                  "text": {
-                    "aggregate": "mean",
-                    "field": "waitingTime",
-                    "format": ".4",
-                    "type": "quantitative"
-                  }
-                }
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "data": {"name": "data-times"},
-    "transform": [
-      {
-        "lookup": "station",
-        "from": {
-          "data": {"name": "data-kpis"},
-          "key": "station",
-          "fields": [
-            "shiftIdentifier",
-            "locationId",
-            "validFrom",
-            "validTo",
-            "oee",
-            "oeeSetpoint",
-            "availability",
-            "efficiency",
-            "quality",
-            "fpy",
-            "fpySetPoint",
-            "partCount",
-            "partCountSetPoint",
-            "countNIO",
-            "productivity",
-            "station"
+            }
           ]
         }
-      },
-      {"calculate": "datum.station", "as": "s"}
-    ],
-    "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json",
-    "datasets": {
-      "data-times": [
+      ]
+    },
+    {
+      "vconcat": [
         {
-          "cycleTime": 50,
-          "exitTime": 8,
-          "processTime": 10,
-          "waitingTime": 4,
-          "station": 220
+          "mark": {"type": "text", "fill": "white"},
+          "encoding": {"size": {"value": 16}, "text": {"value": "Bottleneck"}}
         },
         {
-          "cycleTime": 40,
-          "exitTime": 9,
-          "processTime": 28,
-          "waitingTime": 6,
-          "station": 230
-        },
-        {
-          "cycleTime": 40,
-          "exitTime": 5,
-          "processTime": 22,
-          "waitingTime": 8,
-          "station": 260
+          "layer": [
+            {
+              "mark": {"type": "circle", "fill": "red"},
+              "encoding": {
+                "size": {
+                  "aggregate": "mean",
+                  "field": "partCount",
+                  "scale": {"range": [800, 8000]},
+                  "type": "quantitative"
+                },
+                "text": {"value": "Bottleneck"}
+              }
+            },
+            {
+              "mark": {"type": "text", "fill": "white"},
+              "encoding": {
+                "text": {
+                  "aggregate": "mean",
+                  "field": "partCount",
+                  "format": ".4",
+                  "type": "quantitative"
+                }
+              }
+            }
+          ]
         }
-      ],
-      "data-kpis": [
+      ]
+    },
+    {
+      "vconcat": [
         {
-          "shiftIdentifier": 0,
-          "locationId": "string",
-          "validFrom": "2022-10-17T15:13:42.835Z",
-          "validTo": "2022-10-17T15:13:42.835Z",
-          "oee": 82,
-          "oeeSetpoint": 0,
-          "availability": 0,
-          "efficiency": 0,
-          "quality": 0,
-          "fpy": 89,
-          "fpySetPoint": 0,
-          "partCount": 42,
-          "partCountSetPoint": 0,
-          "countNIO": 0,
-          "productivity": 75,
-          "station": 220
+          "mark": {"type": "text", "fill": "white"},
+          "encoding": {"size": {"value": 16}, "text": {"value": "KPIs"}}
         },
         {
-          "shiftIdentifier": 0,
-          "locationId": "string",
-          "validFrom": "2022-10-17T15:13:42.835Z",
-          "validTo": "2022-10-17T15:13:42.835Z",
-          "oee": 89,
-          "oeeSetpoint": 0,
-          "availability": 0,
-          "efficiency": 0,
-          "quality": 0,
-          "fpy": 92,
-          "fpySetPoint": 0,
-          "partCount": 60,
-          "partCountSetPoint": 0,
-          "countNIO": 0,
-          "productivity": 50,
-          "station": 230
-        },
-        {
-          "shiftIdentifier": 0,
-          "locationId": "string",
-          "validFrom": "2022-10-17T15:13:42.835Z",
-          "validTo": "2022-10-17T15:13:42.835Z",
-          "oee": 90,
-          "oeeSetpoint": 0,
-          "availability": 0,
-          "efficiency": 0,
-          "quality": 0,
-          "fpy": 90,
-          "fpySetPoint": 0,
-          "partCount": 60,
-          "partCountSetPoint": 0,
-          "countNIO": 0,
-          "productivity": 40,
-          "station": 260
+          "layer": [
+            {
+              "mark": {"type": "circle", "fill": "red"},
+              "encoding": {
+                "size": {
+                  "aggregate": "mean",
+                  "field": "changeTime",
+                  "scale": {"range": [800, 8000]},
+                  "type": "quantitative"
+                },
+                "text": {"value": "KPIs"}
+              }
+            },
+            {
+              "mark": {"type": "text", "fill": "white"},
+              "encoding": {
+                "text": {
+                  "aggregate": "mean",
+                  "field": "changeTime",
+                  "format": ".4",
+                  "type": "quantitative"
+                }
+              }
+            }
+          ]
         }
       ]
     }
-  }
+  ],
+  "data": {
+    "url": "https://raw.githubusercontent.com/tiagodavi70/dashboard_linha_montagem/main/simulation/CycleTimes.json"
+  },
+  "transform": [
+    {
+      "lookup": "station",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/tiagodavi70/dashboard_linha_montagem/main/simulation/KPI.json"
+        },
+        "key": "station",
+        "fields": [
+          "shiftIdentifier",
+          "locationId",
+          "validFrom",
+          "validTo",
+          "oee",
+          "oeeSetpoint",
+          "availability",
+          "efficiency",
+          "quality",
+          "fpy",
+          "fpySetPoint",
+          "partCount",
+          "partCountSetPoint",
+          "countNIO",
+          "productivity",
+          "station"
+        ]
+      }
+    }
+  ],
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json"
+}

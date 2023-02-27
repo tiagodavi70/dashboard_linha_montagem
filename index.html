@@ -17,22 +17,20 @@
         </div>
         <div id="container">
             <div id="floormap-container">
-                <object data="layout.svg" type="image/svg+xml" id="svgLoaded">
+                <object data="layouts/Planta024.svg" type="image/svg+xml" id="svgLoaded">
                     <!-- <img src="yourfallback.jpg" /> -->
                 </object>
                 <div id="vis-container" style="display: none;"> 
                     <div id="vis1" class="vis-detail"></div>
                 </div>
                     
-                <div id="interaction-container">
-                    <!-- <div class="">
-                        Filters
-                    </div> -->
-                    <img class="icon" id="kpis_icon" src="icons/kpisWhite.png"> <img/>
-                    <img class="icon" id="close_icon" src="icons/IconClose.png"> <img/>
+                <div id="interaction-container" ">
                     <img class="icon" id="filter_icon" src="icons/filter.png"> <img/>
-                    <div>
-                        
+                    <div class="container" id="interaction-menu" style="display: none;">
+                        <img class="icon" id="features_icon" src="icons/kpisWhite.png"> <img/>
+                        <img class="icon" id="cycle_icon" src="icons/cycle_time_icon.png"> <img/>
+                        <img class="icon" id="close_icon" src="icons/IconClose.png"> <img/>
+                        <div id="vis2" class="vis-detail"></div>
                     </div>
                 </div>
             </div>
@@ -60,6 +58,7 @@
 		let width = window.innerWidth - margin.left - margin.right;
 		let height = window.innerHeight - margin.top - margin.bottom;
         let stationsSelect = "";
+        let kpi_data = [], times_data = [], bottleneck = {};
 
         window.onload = function() {
             let svgObj = document.getElementById("svgLoaded");
@@ -82,8 +81,8 @@
             stationsSelect = d3.select(stationsLayer).selectAll("rect");
             
             stationsSelect
-                .attr("width", function() { return d3.select(this).attr("width") * 2})
-                .attr("height", function() { return d3.select(this).attr("height") * 2})
+                .attr("width", function() { return d3.select(this).attr("width") }) // * 2
+                .attr("height", function() { return d3.select(this).attr("height") })
                 .style("fill", mainColor)
                 .style("fill-opacity", .8)
                 .style("cursor", "pointer")
@@ -98,7 +97,7 @@
                 .join("text")
                     .attr("x", d => +d3.select(d).attr("x") + +d3.select(d).attr("height") * .14)
                     .attr("y", d => +d3.select(d).attr("y") + +d3.select(d).attr("width") * .64)
-                    .style("font-size", 7)
+                    .style("font-size", 100)
                     .style("fill", "white")
                     .attr("pointer-events", "none")
                     .text(d => sn(d));
@@ -106,8 +105,14 @@
             stations = stations.sort((a,b) => +sn(a) > +sn(b)? 1:-1 );
             createList(stations);
         };
-        loadSpecs();
         
-
+        Promise.all([d3.json("./simulation/CycleTimes.json"),
+                     d3.json("./simulation/KPI.json"),
+                     d3.json("./DadosSimulados/Bottleneck.json")]).then(values => {
+            times_data = values[0];
+            kpi_data = values[1];
+            bottleneck = values[2];
+            loadSpecs();
+        });
 	</script>
 </html>

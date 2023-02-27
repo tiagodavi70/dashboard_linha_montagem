@@ -1,0 +1,11 @@
+Productivity: 97%
+ 
+totalCycletime: 40s
+ 
+ProcessTime: 30s
+ 
+exitTime: 5s
+ 
+changeTime: 10s
+ 
+partCountNIO: 2% do partCount total.
