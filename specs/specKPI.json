@@ -16,6 +16,7 @@
       "titleFontSize": 14
     },
     "legend": {
+      "disable": true,
       "labelColor": "white",
       "padding": 1,
       "strokeColor": "white",
@@ -30,24 +31,47 @@
           "hconcat": [
             {
               "mark": {"type": "text", "fill": "white"},
-              "encoding": {"size": {"value": 16}, "text": {"value": "oee"}}
+              "encoding": {
+                "size": {"value": 16},
+                "text": {"value": ["oee: 78.06", "Target: 88.5"]}
+              }
             },
             {
               "layer": [
                 {
                   "mark": {"type": "circle", "fill": "red"},
                   "encoding": {
+                    "fill": {
+                      "aggregate": "mean",
+                      "field": "oee",
+                      "scale": {
+                        "domain": [79.65, 84.075, 88.5],
+                        "range": ["red", "yellow", "green"]
+                      },
+                      "type": "quantitative"
+                    },
                     "size": {
                       "aggregate": "mean",
                       "field": "oee",
-                      "scale": {"range": [800, 8000]},
+                      "scale": {
+                        "domain": [79.65, 88.5, 79.65, 88.5],
+                        "range": [8000, 100]
+                      },
                       "type": "quantitative"
-                    }
+                    },
+                    "tooltip": [
+                      {
+                        "aggregate": "mean",
+                        "field": "oee",
+                        "type": "quantitative"
+                      }
+                    ]
                   }
                 },
                 {
                   "mark": {"type": "text", "fill": "white"},
                   "encoding": {
+                    "opacity": {"value": 0},
                     "text": {
                       "aggregate": "mean",
                       "field": "oee",
@@ -64,24 +88,47 @@
           "hconcat": [
             {
               "mark": {"type": "text", "fill": "white"},
-              "encoding": {"size": {"value": 16}, "text": {"value": "fpy"}}
+              "encoding": {
+                "size": {"value": 16},
+                "text": {"value": ["fpy: 0.92156863", "Target: 0.87"]}
+              }
             },
             {
               "layer": [
                 {
                   "mark": {"type": "circle", "fill": "red"},
                   "encoding": {
+                    "fill": {
+                      "aggregate": "mean",
+                      "field": "fpy",
+                      "scale": {
+                        "domain": [0.783, 0.8265, 0.87],
+                        "range": ["red", "yellow", "green"]
+                      },
+                      "type": "quantitative"
+                    },
                     "size": {
                       "aggregate": "mean",
                       "field": "fpy",
-                      "scale": {"range": [800, 8000]},
+                      "scale": {
+                        "domain": [0.783, 0.87, 0.783, 0.87],
+                        "range": [8000, 100]
+                      },
                       "type": "quantitative"
-                    }
+                    },
+                    "tooltip": [
+                      {
+                        "aggregate": "mean",
+                        "field": "fpy",
+                        "type": "quantitative"
+                      }
+                    ]
                   }
                 },
                 {
                   "mark": {"type": "text", "fill": "white"},
                   "encoding": {
+                    "opacity": {"value": 0},
                     "text": {
                       "aggregate": "mean",
                       "field": "fpy",
@@ -104,7 +151,7 @@
               "mark": {"type": "text", "fill": "white"},
               "encoding": {
                 "size": {"value": 16},
-                "text": {"value": "partCount"}
+                "text": {"value": ["partCount: 102", "Target: 96.845"]}
               }
             },
             {
@@ -112,17 +159,37 @@
                 {
                   "mark": {"type": "circle", "fill": "red"},
                   "encoding": {
+                    "fill": {
+                      "aggregate": "mean",
+                      "field": "partCount",
+                      "scale": {
+                        "domain": [87.1605, 92.00274999999999, 96.845],
+                        "range": ["red", "yellow", "green"]
+                      },
+                      "type": "quantitative"
+                    },
                     "size": {
                       "aggregate": "mean",
                       "field": "partCount",
-                      "scale": {"range": [800, 8000]},
+                      "scale": {
+                        "domain": [87.1605, 96.845, 87.1605, 96.845],
+                        "range": [8000, 100]
+                      },
                       "type": "quantitative"
-                    }
+                    },
+                    "tooltip": [
+                      {
+                        "aggregate": "mean",
+                        "field": "partCount",
+                        "type": "quantitative"
+                      }
+                    ]
                   }
                 },
                 {
                   "mark": {"type": "text", "fill": "white"},
                   "encoding": {
+                    "opacity": {"value": 0},
                     "text": {
                       "aggregate": "mean",
                       "field": "partCount",
@@ -141,7 +208,7 @@
               "mark": {"type": "text", "fill": "white"},
               "encoding": {
                 "size": {"value": 16},
-                "text": {"value": "partCountSetPoint"}
+                "text": {"value": ["partCountSetPoint: 100", "Target: 100"]}
               }
             },
             {
@@ -149,17 +216,37 @@
                 {
                   "mark": {"type": "circle", "fill": "red"},
                   "encoding": {
+                    "fill": {
+                      "aggregate": "mean",
+                      "field": "partCountSetPoint",
+                      "scale": {
+                        "domain": [90, 95, 100],
+                        "range": ["red", "yellow", "green"]
+                      },
+                      "type": "quantitative"
+                    },
                     "size": {
                       "aggregate": "mean",
                       "field": "partCountSetPoint",
-                      "scale": {"range": [800, 8000]},
+                      "scale": {
+                        "domain": [90, 100, 90, 100],
+                        "range": [8000, 100]
+                      },
                       "type": "quantitative"
-                    }
+                    },
+                    "tooltip": [
+                      {
+                        "aggregate": "mean",
+                        "field": "partCountSetPoint",
+                        "type": "quantitative"
+                      }
+                    ]
                   }
                 },
                 {
                   "mark": {"type": "text", "fill": "white"},
                   "encoding": {
+                    "opacity": {"value": 0},
                     "text": {
                       "aggregate": "mean",
                       "field": "partCountSetPoint",
@@ -178,7 +265,7 @@
               "mark": {"type": "text", "fill": "white"},
               "encoding": {
                 "size": {"value": 16},
-                "text": {"value": "productivity"}
+                "text": {"value": ["productivity: 0", "Target: 97"]}
               }
             },
             {
@@ -186,17 +273,37 @@
                 {
                   "mark": {"type": "circle", "fill": "red"},
                   "encoding": {
+                    "fill": {
+                      "aggregate": "mean",
+                      "field": "productivity",
+                      "scale": {
+                        "domain": [87.3, 92.14999999999999, 97],
+                        "range": ["red", "yellow", "green"]
+                      },
+                      "type": "quantitative"
+                    },
                     "size": {
                       "aggregate": "mean",
                       "field": "productivity",
-                      "scale": {"range": [800, 8000]},
+                      "scale": {
+                        "domain": [87.3, 97, 87.3, 97],
+                        "range": [8000, 100]
+                      },
                       "type": "quantitative"
-                    }
+                    },
+                    "tooltip": [
+                      {
+                        "aggregate": "mean",
+                        "field": "productivity",
+                        "type": "quantitative"
+                      }
+                    ]
                   }
                 },
                 {
                   "mark": {"type": "text", "fill": "white"},
                   "encoding": {
+                    "opacity": {"value": 0},
                     "text": {
                       "aggregate": "mean",
                       "field": "productivity",
@@ -212,16 +319,12 @@
       ]
     }
   ],
-  "data": {
-    "url": "https://raw.githubusercontent.com/tiagodavi70/dashboard_linha_montagem/main/simulation/CycleTimes.json"
-  },
+  "data": {"name": "data-times"},
   "transform": [
     {
       "lookup": "station",
       "from": {
-        "data": {
-          "url": "https://raw.githubusercontent.com/tiagodavi70/dashboard_linha_montagem/main/simulation/KPI.json"
-        },
+        "data": {"name": "data-kpi"},
         "key": "station",
         "fields": [
           "shiftIdentifier",
@@ -243,7 +346,46 @@
         ]
       }
     },
-    {"filter": "datum.station == 220"}
+    {"filter": "datum.station == 260"}
   ],
-  "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json"
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json",
+  "datasets": {
+    "data-times": [
+      {
+        "Reference": 9999999989,
+        "SerialNumber": "83700220220239999999989",
+        "changeTime": -1,
+        "exitTime": -1,
+        "line": 10,
+        "myKey": 99009,
+        "processTime": 0,
+        "station": 260,
+        "timeStamp": "2023-02-22T05:45:03.138231100",
+        "totalCycleTime": -1,
+        "id": null,
+        "serialNumber": null,
+        "reference": null
+      }
+    ],
+    "data-kpi": [
+      {
+        "shiftIdentifier": 0,
+        "locationId": 10,
+        "validFrom": "2022-10-03T04:45:00+01:00",
+        "validTo": "2022-10-03T12:45:00+01:00",
+        "oee": 78.69,
+        "oeeSetpoint": 100,
+        "availability": 83.81,
+        "efficiency": 96.18,
+        "quality": 98.7,
+        "fpy": -1,
+        "fpySetPoint": -1,
+        "partCount": 121,
+        "partCountSetPoint": 100,
+        "countNIO": 0,
+        "productivity": 0,
+        "station": 260
+      }
+    ]
+  }
 }

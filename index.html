@@ -59,6 +59,7 @@
 		let height = window.innerHeight - margin.top - margin.bottom;
         let stationsSelect = "";
         let kpi_data = [], times_data = [], bottleneck = {};
+        let kpi_station = {}, cycle_station = {};
 
         window.onload = function() {
             let svgObj = document.getElementById("svgLoaded");
@@ -108,10 +109,24 @@
         
         Promise.all([d3.json("./simulation/CycleTimes.json"),
                      d3.json("./simulation/KPI.json"),
-                     d3.json("./DadosSimulados/Bottleneck.json")]).then(values => {
+                     d3.json("./DadosSimulados/Bottleneck.json"),
+                     d3.json("./DadosSimulados/TargetsExtraSim.json")
+                    ]
+                    .concat(["260", "270", "290"].map(d=> d3.json(`./simulation/KPICurrentShift${d}.json`)))
+        ).then(values => {
             times_data = values[0];
             kpi_data = values[1];
             bottleneck = values[2];
+            taregts = values[3];
+
+            kpi_station = { "260": [values[4]].map(d=> {d.station = 260; return d;}),
+                            "270": [values[5]].map(d=> {d.station = 270; return d;}),
+                            "290": [values[6]].map(d=> {d.station = 290; return d;})};
+            
+            let c_helper = s => times_data.filter(d=>+d.station==s);
+            cycle_station = {"260": [c_helper(260)[c_helper(260).length-1]],
+                             "270": [c_helper(270)[c_helper(270).length-1]],
+                             "290": [c_helper(290)[c_helper(290).length-1]]};
             loadSpecs();
         });
 	</script>
