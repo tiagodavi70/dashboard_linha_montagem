@@ -112,7 +112,7 @@
                      d3.json("./DadosSimulados/Bottleneck.json"),
                      d3.json("./DadosSimulados/TargetsExtraSim.json")
                     ]
-                    .concat(["260", "270", "290"].map(d=> d3.json(`./simulation/KPICurrentShift${d}.json`)))
+                    .concat(["260", "270", "290"].map(d=> d3.json(`./DadosSimulados/KPICurrentShift${d}.json`)))
         ).then(values => {
             times_data = values[0];
             kpi_data = values[1];
@@ -122,11 +122,11 @@
             kpi_station = { "260": [values[4]].map(d=> {d.station = 260; return d;}),
                             "270": [values[5]].map(d=> {d.station = 270; return d;}),
                             "290": [values[6]].map(d=> {d.station = 290; return d;})};
-            
+            console.log(kpi_station);
             let c_helper = s => times_data.filter(d=>+d.station==s);
-            cycle_station = {"260": [c_helper(260)[c_helper(260).length-1]],
-                             "270": [c_helper(270)[c_helper(270).length-1]],
-                             "290": [c_helper(290)[c_helper(290).length-1]]};
+            cycle_station = {"260": [c_helper(260)[0]],
+                             "270": [c_helper(270)[0]],
+                             "290": [c_helper(290)[0]]};
             loadSpecs();
         });
 	</script>

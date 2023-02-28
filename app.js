@@ -152,7 +152,6 @@ function loadVis(vistype, attr) {
 
         specfilter.datasets["data-kpi"] = kpi_station[station_selected];
         specfilter.datasets["data-times"] = cycle_station[station_selected];
-
     } else if (specfilter.id == 3 || specfilter.id == 4){
         specfilter.transform[0] = {"filter": `datum.station == ${station_selected}`};
         

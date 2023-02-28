@@ -83,6 +83,9 @@ app.get("/it/application/api/augmanity-pps4-dummy/d/v1/api/bottlenecks/actual", 
     res.send(JSON.stringify(bottleneck));
 });
 
+// app.post("log", (req,res) =>{
+// });
+
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
 })

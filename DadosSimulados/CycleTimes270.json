@@ -1,16 +1,28 @@
 [
-    {"id":99088,"line":"10","station":"260","serialNumber":null,"reference":null,"timeStamp":"2023-02-22T06:02:33.1361328","totalCycleTime":-1,"processTime":0,"changeTime":-1,"exitTime":-1},{"id":99114,"line":"10","station":"260","serialNumber":null,"reference":null,"timeStamp":"2023-02-22T06:09:22.916293","totalCycleTime":409.78,"processTime":0,"changeTime":-1,"exitTime":-1},{"id":99178,"line":"10","station":"260","serialNumber":null,"reference":null,"timeStamp":"2023-02-22T06:20:53.7976948","totalCycleTime":690.88,"processTime":0,"changeTime":-1,"exitTime":-1},{"id":99194,"line":"10","station":"260","serialNumber":null,"reference":null,"timeStamp":"2023-02-22T06:23:19.1922374","totalCycleTime":145.39,"processTime":0,"changeTime":-1,"exitTime":-1},{"id":99278,"line":"10","station":"260","serialNumber":null,"reference":null,"timeStamp":"2023-02-22T06:35:40.1719779","totalCycleTime":740.98,"processTime":0,"changeTime":-1,"exitTime":-1},{"id":99307,"line":"10","station":"260","serialNumber":null,"reference":null,"timeStamp":"2023-02-22T06:39:39.3361731","totalCycleTime":239.16,"processTime":0,"changeTime":-1,"exitTime":-1},
+    {
+        "id":99088,
+        "timeStamp":"2023-02-22T06:02:33.1361328",
+        "line":"10",
+        "station":"260",
+        "serialNumber":null,
+        "reference":null,
+        "changeTime": 10,
+        "exitTime": 5,
+        "processTime": 30,
+        "totalCycleTime": 40
+    }
+        ,{"id":99114,"line":"10","station":"260","serialNumber":null,"reference":null,"timeStamp":"2023-02-22T06:09:22.916293","totalCycleTime":409.78,"processTime":0,"changeTime":-1,"exitTime":-1},{"id":99178,"line":"10","station":"260","serialNumber":null,"reference":null,"timeStamp":"2023-02-22T06:20:53.7976948","totalCycleTime":690.88,"processTime":0,"changeTime":-1,"exitTime":-1},{"id":99194,"line":"10","station":"260","serialNumber":null,"reference":null,"timeStamp":"2023-02-22T06:23:19.1922374","totalCycleTime":145.39,"processTime":0,"changeTime":-1,"exitTime":-1},{"id":99278,"line":"10","station":"260","serialNumber":null,"reference":null,"timeStamp":"2023-02-22T06:35:40.1719779","totalCycleTime":740.98,"processTime":0,"changeTime":-1,"exitTime":-1},{"id":99307,"line":"10","station":"260","serialNumber":null,"reference":null,"timeStamp":"2023-02-22T06:39:39.3361731","totalCycleTime":239.16,"processTime":0,"changeTime":-1,"exitTime":-1},
     {
         "Reference": "7733600056",
         "SerialNumber": "83703380005347733600056P",
-        "changeTime": 10.05,
-        "exitTime": 0.07,
+        "totalCycleTime":-1,
+        "processTime":0,
+        "changeTime":-1,
+        "exitTime":-1,
         "line": "7",
         "myKey": 99026,
-        "processTime": 244.36,
         "station": "43",
-        "timeStamp": "2023-02-22 05:48:58.557391",
-        "totalCycleTime": -1.0
+        "timeStamp": "2023-02-22 05:48:58.557391"
     },
     {
         "Reference": "7736902099",
