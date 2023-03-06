@@ -6,10 +6,10 @@
         "serialNumber":null,
         "reference":null,
         "timeStamp":"2023-02-22T06:02:33.1361328",
-        "totalCycleTime":-1,
-        "processTime":0,
-        "changeTime":-1,
-        "exitTime":-1
+        "changeTime": 10,
+        "exitTime": 5,
+        "processTime": 30,
+        "totalCycleTime": 40
     },
     {
         "id":99114,

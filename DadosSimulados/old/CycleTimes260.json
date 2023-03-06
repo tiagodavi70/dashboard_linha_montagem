@@ -2,14 +2,14 @@
     {
         "Reference": "9999999989",
         "SerialNumber": "83700220220239999999989",
-        "changeTime": 10,
-        "exitTime": 5,
         "line": "10",
         "myKey": 99009,
-        "processTime": 30,
         "station": "160",
         "timeStamp": "2023-02-22 05:45:03.1382311",
-        "totalCycleTime": 60
+        "totalCycleTime": 60,
+        "processTime": 30,
+        "changeTime": 10,
+        "exitTime": 5
     },
     {
         "Reference": "7733600056",
