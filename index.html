@@ -22,6 +22,9 @@
                 </object>
                 <div id="vis-container" style="display: none;"> 
                     <div id="vis1" class="vis-detail"></div>
+                    <div id="interaction-index">
+                        
+                    </div>
                 </div>
                     
                 <div id="interaction-container" ">
@@ -30,7 +33,6 @@
                         <img class="icon" id="features_icon" src="icons/kpisWhite.png"> <img/>
                         <img class="icon" id="cycle_icon" src="icons/cycle_time_icon.png"> <img/>
                         <img class="icon" id="close_icon" src="icons/IconClose.png"> <img/>
-                        <div id="vis2" class="vis-detail"></div>
                     </div>
                 </div>
             </div>
@@ -53,6 +55,7 @@
     </body>
     
     <script src="app.js"></script>
+    <script src="specManip.js"></script>
 	<script type="text/javascript">
 		let margin = {top: 50, right: 50, bottom: 50, left: 50};
 		let width = window.innerWidth - margin.left - margin.right;
@@ -117,16 +120,13 @@
             times_data = values[0];
             kpi_data = values[1];
             bottleneck = values[2];
-            taregts = values[3];
+            targets = values[3];
 
-            kpi_station = { "260": [values[4]].map(d=> {d.station = 260; return d;}),
-                            "270": [values[5]].map(d=> {d.station = 270; return d;}),
-                            "290": [values[6]].map(d=> {d.station = 290; return d;})};
-            console.log(kpi_station);
+            kpi_station = { "260": [values[4]].map(d=>{d.station = 260; return d}),
+                            "270": [values[5]].map(d=>{d.station = 270; return d}),
+                            "290": [values[6]].map(d=>{d.station = 290; return d})};
             let c_helper = s => times_data.filter(d=>+d.station==s);
-            cycle_station = {"260": [c_helper(260)[0]],
-                             "270": [c_helper(270)[0]],
-                             "290": [c_helper(290)[0]]};
+            cycle_station = {"260": [c_helper(260)[0]], "270": [c_helper(270)[0]], "290": [c_helper(290)[0]]};
             loadSpecs();
         });
 	</script>

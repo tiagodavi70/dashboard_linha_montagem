@@ -33,7 +33,7 @@
               "mark": {"type": "text", "fill": "white"},
               "encoding": {
                 "size": {"value": 16},
-                "text": {"value": ["totalCycleTime: 163.86", "Target: 40"]}
+                "text": {"value": ["totalCycleTime: 60.0", "Target: 40"]}
               }
             },
             {
@@ -45,7 +45,7 @@
                       "aggregate": "mean",
                       "field": "totalCycleTime",
                       "scale": {
-                        "domain": [36, 38, 40],
+                        "domain": [0, 38, 42],
                         "range": ["green", "yellow", "red"]
                       },
                       "type": "quantitative"
@@ -53,19 +53,9 @@
                     "size": {
                       "aggregate": "mean",
                       "field": "totalCycleTime",
-                      "scale": {
-                        "domain": [36, 40, 36, 40],
-                        "range": [100, 8000]
-                      },
+                      "scale": {"domain": [0, 80], "range": [500, 3000]},
                       "type": "quantitative"
-                    },
-                    "tooltip": [
-                      {
-                        "aggregate": "mean",
-                        "field": "totalCycleTime",
-                        "type": "quantitative"
-                      }
-                    ]
+                    }
                   }
                 },
                 {
@@ -90,7 +80,7 @@
               "mark": {"type": "text", "fill": "white"},
               "encoding": {
                 "size": {"value": 16},
-                "text": {"value": ["processTime: 143.92", "Target: 30"]}
+                "text": {"value": ["processTime: 30.0", "Target: 30"]}
               }
             },
             {
@@ -102,7 +92,7 @@
                       "aggregate": "mean",
                       "field": "processTime",
                       "scale": {
-                        "domain": [27, 28.5, 30],
+                        "domain": [0, 28.5, 31.5],
                         "range": ["green", "yellow", "red"]
                       },
                       "type": "quantitative"
@@ -110,19 +100,9 @@
                     "size": {
                       "aggregate": "mean",
                       "field": "processTime",
-                      "scale": {
-                        "domain": [27, 30, 27, 30],
-                        "range": [100, 8000]
-                      },
+                      "scale": {"domain": [0, 60], "range": [500, 3000]},
                       "type": "quantitative"
-                    },
-                    "tooltip": [
-                      {
-                        "aggregate": "mean",
-                        "field": "processTime",
-                        "type": "quantitative"
-                      }
-                    ]
+                    }
                   }
                 },
                 {
@@ -151,7 +131,7 @@
               "mark": {"type": "text", "fill": "white"},
               "encoding": {
                 "size": {"value": 16},
-                "text": {"value": ["exitTime: -1.0", "Target: 5"]}
+                "text": {"value": ["exitTime: 5.0", "Target: 5"]}
               }
             },
             {
@@ -163,7 +143,7 @@
                       "aggregate": "mean",
                       "field": "exitTime",
                       "scale": {
-                        "domain": [4.5, 4.75, 5],
+                        "domain": [0, 4.75, 5.25],
                         "range": ["green", "yellow", "red"]
                       },
                       "type": "quantitative"
@@ -171,19 +151,9 @@
                     "size": {
                       "aggregate": "mean",
                       "field": "exitTime",
-                      "scale": {
-                        "domain": [4.5, 5, 4.5, 5],
-                        "range": [100, 8000]
-                      },
+                      "scale": {"domain": [0, 10], "range": [500, 3000]},
                       "type": "quantitative"
-                    },
-                    "tooltip": [
-                      {
-                        "aggregate": "mean",
-                        "field": "exitTime",
-                        "type": "quantitative"
-                      }
-                    ]
+                    }
                   }
                 },
                 {
@@ -208,7 +178,7 @@
               "mark": {"type": "text", "fill": "white"},
               "encoding": {
                 "size": {"value": 16},
-                "text": {"value": ["changeTime: -1.0", "Target: 10"]}
+                "text": {"value": ["changeTime: 10.0", "Target: 10"]}
               }
             },
             {
@@ -220,7 +190,7 @@
                       "aggregate": "mean",
                       "field": "changeTime",
                       "scale": {
-                        "domain": [9, 9.5, 10],
+                        "domain": [0, 9.5, 10.5],
                         "range": ["green", "yellow", "red"]
                       },
                       "type": "quantitative"
@@ -228,16 +198,9 @@
                     "size": {
                       "aggregate": "mean",
                       "field": "changeTime",
-                      "scale": {"domain": [9, 10, 9, 10], "range": [100, 8000]},
+                      "scale": {"domain": [0, 20], "range": [500, 3000]},
                       "type": "quantitative"
-                    },
-                    "tooltip": [
-                      {
-                        "aggregate": "mean",
-                        "field": "changeTime",
-                        "type": "quantitative"
-                      }
-                    ]
+                    }
                   }
                 },
                 {
@@ -260,6 +223,7 @@
     }
   ],
   "data": {"name": "data-times"},
+  "resolve": {"scale": {"fill": "independent", "size": "independent"}},
   "transform": [
     {
       "lookup": "station",

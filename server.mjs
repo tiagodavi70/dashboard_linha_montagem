@@ -10,6 +10,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 import fs from 'fs';
+import ChartGenerator from './genchart.mjs';
 
 const port = 5500
 
@@ -32,9 +33,18 @@ app.use('/', express.static(__dirname, {index: "index.html"}));
 // "https://ews-emea.api.bosch.com/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi/current-shift?line=10&station=260"
 // "https://ews-emea.api.bosch.com/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi?line=10&station=260&startDate=2022-12-02&endDate=2022-12-03"
 
-let cycletimes = JSON.parse(fs.readFileSync(`./simulation/CycleTimes.json`));
-let kpi = JSON.parse(fs.readFileSync(`./simulation/KPI.json`));
-let bottleneck = JSON.parse(fs.readFileSync(`./DadosSimulados/Bottleneck.json`));
+let rh = f => JSON.parse(fs.readFileSync(f));
+let cycletimes = rh(`./simulation/CycleTimes.json`);
+let kpi = rh(`./simulation/KPI.json`);
+let bottleneck = rh(`./DadosSimulados/Bottleneck.json`);
+let targets = rh(`./DadosSimulados/TargetsExtraSim.json`);
+
+let c_helper = s => cycletimes.filter(d=>+d.station==s);
+let cycle_station = {"260": [c_helper(260)[0]], "270": [c_helper(270)[0]], "290": [c_helper(290)[0]]};
+let kpi_station = ["260", "270", "290"].map(d=> rh(`./DadosSimulados/KPICurrentShift${d}.json`))      
+kpi_station = { "260": [kpi_station[0]].map(d=>{d.station = 260; return d}),
+                "270": [kpi_station[1]].map(d=>{d.station = 270; return d}),
+                "290": [kpi_station[2]].map(d=>{d.station = 290; return d})};
 
 function filter(station, list, q) {
     let filtered = list.filter(d => d.station == station);
@@ -86,6 +96,66 @@ app.get("/it/application/api/augmanity-pps4-dummy/d/v1/api/bottlenecks/actual", 
 // app.post("log", (req,res) =>{
 // });
 
+function logging(url) {
+
+}
+
+function sendVis(req, res, base64string){
+    // if (!req.headers['user-agent'].includes("Unity"))
+	// 	if (!req.query.svg) {
+    //         if (!req.query.base64) {
+    //             res.send("<title> Generated Chart </title>" +
+    //                 "<img src='data:image/png;base64," + base64string + "' alt='generated chart'/>");
+    //         }
+	// 	    else {
+    //             res.send(base64string);
+    //         }
+    //     }
+    // else {
+    //     res.send(base64string);
+    // }
+    console.log("request done");
+    res.send(base64string);
+}
+
+function sendVisImg(res, base64string){
+    let img = Buffer.from(base64string, 'base64');
+    res.writeHead(200, {
+        'Content-Type': 'image/png',
+        'Content-Length': img.length
+    });
+    res.end(img);
+}
+
+// http://localhost:5500/260/chartgen.png?chart=specKPI
+// http://localhost:5500/260/chartgen.png?chart=specCycleTime
+// http://localhost:5500/260/chartgen.png?chart=specSamples&attr=oee
+// http://localhost:5500/290/chartgen.png?chart=specSamples&attr=oee&index=100
+// http://localhost:5500/270/chartgen.png?chart=specSamples&attr=oee&index=90
+app.get('/:station/chartgen.png', function (req, res) {
+    logging(req.originalUrl);
+
+    req.query.img = false;
+    let params = req.query;
+    params.station = req.params.station;
+    params.id = ["specKPI", "specCycleTime", "specSamples"].indexOf(params.chart) + 1;
+    console.log(params);
+    
+    params.kpi = kpi_station;
+    params.cycle = cycle_station;
+    params.targets = targets;
+    
+    let chartgen = new ChartGenerator(params);
+    
+    chartgen.generateChart().then(base64string => {
+        if (params.img) {
+            sendVisImg(res, base64string);
+        } else {
+            sendVis(req, res, base64string);
+        }
+    }).catch((err) => { console.error(err); });
+});
+
 app.listen(port, () => {
-  console.log(`App listening on port ${port}`)
+    console.log(`App listening on port ${port}`)
 })

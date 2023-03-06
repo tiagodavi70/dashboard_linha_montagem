@@ -94,15 +94,19 @@ img#banner_img{
 /* floormap */
 
 #floormap-container {
-    padding-top: 12vh;
+    padding-top: 9vh;
 }
 
 #vis-container {
-    margin: 10vh;
+    margin: 6vh;
     width: 55vw;
 }
 
 #station-container {
     display: inline-block;
     text-align: right;
+}
+
+#interaction-index {
+    padding: 2vw;
 }

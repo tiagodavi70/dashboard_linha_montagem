@@ -46,7 +46,7 @@ d3.select("#filter_icon").on("click", function(event, d) {
 
 function loadSpecs() {
     Promise.all([d3.json("specs/specKPI.json"), d3.json("specs/specCycleTime.json"),
-                 d3.json("specs/specSampleKPI.json"), d3.json("specs/specSampleTime.json")]
+                 d3.json("specs/specSamples.json")]
     ).then((values) => {
         for (let i = 0; i < values.length; i++) {
             let v = values[i];
@@ -142,34 +142,16 @@ function clearSelection() {
 }
 
 function loadVis(vistype, attr) {
+    if (vistype != 3) d3.select("#interaction-index").selectAll("*").remove();
     if (vistype == 0) return;
 
-    let specfilter = JSON.parse(JSON.stringify(specs[vistype-1]));
-    console.log(vistype, specfilter.id)
-    if (specfilter.id == 1 || specfilter.id == 2) {
-        specfilter.transform[1] = {"filter": `datum.station == ${station_selected}`};
-        // console.log(specfilter.datasets["data-kpi"]);
+    let spec = JSON.parse(JSON.stringify(specs[vistype-1]));
 
-        specfilter.datasets["data-kpi"] = kpi_station[station_selected];
-        specfilter.datasets["data-times"] = cycle_station[station_selected];
-    } else if (specfilter.id == 3 || specfilter.id == 4){
-        specfilter.transform[0] = {"filter": `datum.station == ${station_selected}`};
-        
-        specfilter.layer[0].transform[0] = {"filter": `datum.station == ${station_selected}`};
-        specfilter.layer[1].transform[0] = {"filter": `datum.station == ${station_selected}`};
-        // specfilter.transform[0] = {"filter": `datum.station == ${station_selected}`};
-        
-        specfilter.layer[0].data.url = "http://localhost:5500" + (specfilter.layer[0].data.url.includes("KPI") ? `/simulation/KPI.json` : `/simulation/CycleTimes.json`);
-        specfilter.layer[1].data.url = "http://localhost:5500" + (specfilter.layer[1].data.url.includes("KPI") ? `/simulation/KPI.json` : `/simulation/CycleTimes.json`);
-        // specfilter.transform[0].from.data.url = specfilter.transform[0].from.data.url.includes("KPI") ? `./simulation/KPI.json` : `./simulation/CycleTimes.json`;
+    spec = specManip(spec, attr)
 
-        specfilter.layer[0].encoding["y"].field = attr;
-        specfilter.layer[1].encoding["y"].field = attr;
-    }
     function vis(spec, attr) {
         lastAttr = attr;
         mode = spec.id;
-       
         
         vegaEmbed("#vis1", spec, {}).then(result => {
             result.view.addEventListener('click', function(event, item) {
@@ -188,67 +170,13 @@ function loadVis(vistype, attr) {
                             }
                         }
                     } else if (spec.id == 1 || spec.id == 2) {
-                        console.log(item.datum)
                         let key_index = (item.mark.name["concat_".length]) + (item.mark.name["concat_x_concat_".length])
                         let samples = {"3": kpis, "4": cycleTimes};
-                        loadVis(+spec.id + 2, samples[""+(+spec.id + 2)][key_index])
+                        loadVis(3, samples[""+(+spec.id + 2)][key_index])
                     }
                 } 
             });
         })
     }
-    // console.log("loading vis ", mode);
-    
-    // if (specfilter.id == 3 || specfilter.id == 4){
-
-    //     d3.json("http://localhost:5500" + (specfilter.layer[0].data.url.includes("KPI") ? `/simulation/KPI.json` : `/simulation/CycleTimes.json`)).then(r_data =>{
-
-    //         delete specfilter.layer[0].data.url
-    //         delete specfilter.layer[1].data.url
-    //         delete specfilter.data.url
-
-    //         let data = r_data.map( (d,i)=> {d.index = i; return d});
-
-    //         specfilter.data.values = data;
-    //         specfilter.layer[0].data.values = data; //"http://localhost:5500" + (specfilter.layer[0].data.url.includes("KPI") ? `/simulation/KPI.json` : `/simulation/CycleTimes.json`);
-    //         specfilter.layer[1].data.values = data; //"http://localhost:5500" + (specfilter.layer[1].data.url.includes("KPI") ? `/simulation/KPI.json` : `/simulation/CycleTimes.json`);
-    //         // specfilter.transform[0].from.data.url = specfilter.transform[0].from.data.url.includes("KPI") ? `./simulation/KPI.json` : `./simulation/CycleTimes.json`;
-
-    //         // specfilter.layer[0].encoding["y"].field = attr;
-    //         // specfilter.layer[1].encoding["y"].field = attr;
-    
-    //         vis(specfilter, attr);
-    //     })
-    // } else {
-        vis(specfilter, attr);
-    // }
-    
-    // function loadData() {
-        
-    //     const username = '8b9f2e5b-8524-4de5-8472-7e7de6b37864';
-    //     const password = '4817a476-987f-4925-bcf0-6ec0e0334a29';
-    //     let u = btoa(`${username}:${password}`);
-        
-    //     let url = "/api"; //https://ews-emea.api.bosch.com/it/application/api/augmanity-pps4-dummy/d/v1/api/bottlenecks/actual?line=10";
-        
-    //     d3.json(url).then(data => {
-    //         console.log(data);
-    //     })
-    // }
-
-    // loadData();
-    // switch (vistype){
-    //     case 1:{
-    //         vis(specs[0], attr);
-    //         break;
-    //     }
-    //     case 2: {
-    //         vis(specs[1], attr);
-    //         break;
-    //     }
-    //     case 3: {
-    //         vis(specs[2], attr);
-    //         break;
-    //     }
-    // }
+    vis(spec, attr);
 }

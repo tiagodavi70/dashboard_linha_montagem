@@ -32,4 +32,12 @@ http://localhost:5500/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi?line=
 http://localhost:5500/it/application/api/augmanity-pps4-dummy/d/v1/api/bottlenecks/actual?line=10
 ```
 
+## Unity Chart generation usage:
 
+No one of the values should be null.
+``` cs
+GetKPI(string station)
+GetCycleTime(string station)
+
+GetSample(string station, string attr, int index) // if index is not set by the it should be the max value
+```
