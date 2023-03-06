@@ -62,7 +62,7 @@ app.get("/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi/cycle-times", (re
     let url_query = req.query;
     // let data = filter(url_query["station"], cycletimes, url_query)
     // res.send(JSON.stringify(data.length == undefined? [data] : data));
-    res.send(cycletimes[url_query["station"]]);
+    res.send(c_helper(url_query["station"]));
 });
 
 // http://localhost:5500/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi/current-shift?line=10&station=260
