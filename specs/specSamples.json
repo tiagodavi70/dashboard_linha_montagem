@@ -14,7 +14,7 @@
     {
       "mark": {"type": "line", "color": "gold"},
       "encoding": {
-        "x": {"field": "index", "type": "quantitative"},
+        "x": {"field": "index", "type": "quantitative", "sort": "descending"},
         "y": {"field": "totalCycleTime", "type": "quantitative"}
       },
       "transform": [{"filter": "datum.station == '260'"}]

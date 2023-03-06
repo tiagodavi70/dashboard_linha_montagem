@@ -34,7 +34,7 @@ http://localhost:5500/it/application/api/augmanity-pps4-dummy/d/v1/api/bottlenec
 
 ## Unity Chart generation usage:
 
-No one of the values should be null.
+None of the values should be null.
 ``` cs
 GetKPI(string station)
 GetCycleTime(string station)
