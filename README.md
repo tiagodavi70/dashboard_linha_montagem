@@ -32,6 +32,16 @@ http://localhost:5500/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi?line=
 http://localhost:5500/it/application/api/augmanity-pps4-dummy/d/v1/api/bottlenecks/actual?line=10
 ```
 
+* Image requisitions:
+```
+http://localhost:5500/260/chartgen.png?chart=specKPI
+http://localhost:5500/260/chartgen.png?chart=specCycleTime
+
+http://localhost:5500/260/chartgen.png?chart=specSamples&attr=oee
+http://localhost:5500/290/chartgen.png?chart=specSamples&attr=oee&index=100
+http://localhost:5500/270/chartgen.png?chart=specSamples&attr=oee&index=90
+```
+
 ## Unity Chart generation usage:
 
 None of the values should be null.

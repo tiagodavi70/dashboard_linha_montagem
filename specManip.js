@@ -14,12 +14,13 @@ function specManip(specRaw, attr, options=undefined) {
         spec.datasets["data-kpi"] = kpi[station];
         spec.datasets["data-times"] = cycle[station];
     } else if (specType == 3) {
+        // https://raw.githubusercontent.com/tiagodavi70/dashboard_linha_montagem/main
         let isCycle = Object.values(
             {"00": "totalCycleTime", "01": "processTime", "10": "exitTime", "11": "changeTime"}
         ).includes(attr);
         spec.data.url = isCycle ?
-            "https://raw.githubusercontent.com/tiagodavi70/dashboard_linha_montagem/main/simulation/CycleTimes.json" : 
-            "https://raw.githubusercontent.com/tiagodavi70/dashboard_linha_montagem/main/simulation/KPI.json";
+            "./simulation/CycleTimes.json" : 
+            "./simulation/KPI.json";
     
         if (!options) {
             if (d3.select("#interaction-index").nodes()[0].children) {
@@ -57,5 +58,3 @@ function specManip(specRaw, attr, options=undefined) {
 if (module) {
     module.exports = specManip;
 }
-
-// export { specManip };
