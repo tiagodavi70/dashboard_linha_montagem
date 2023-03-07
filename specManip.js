@@ -39,7 +39,6 @@ function specManip(specRaw, attr, options=undefined) {
         spec.layer[1].transform[0] = {"filter": `datum.station == ${station}`};
         
         spec.layer[0].encoding["y"].field = attr;
-        // spec.layer[1].encoding["y"].field = attr;
 
         let slider_value = 100;
         if (options) {
@@ -51,6 +50,11 @@ function specManip(specRaw, attr, options=undefined) {
         spec.transform[1].calculate = "" + targetsjson[attr];
 
         spec.layer[1].encoding.y.title = `${attr} and target in red`;
+
+        if (options.size == "tall") {
+            spec.width = 200;
+            spec.height = 300;
+        }
     }
     return spec;
 }

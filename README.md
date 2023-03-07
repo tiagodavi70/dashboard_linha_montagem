@@ -40,14 +40,15 @@ http://localhost:5500/260/chartgen.png?chart=specCycleTime
 http://localhost:5500/260/chartgen.png?chart=specSamples&attr=oee
 http://localhost:5500/290/chartgen.png?chart=specSamples&attr=oee&index=100
 http://localhost:5500/270/chartgen.png?chart=specSamples&attr=oee&index=90
+http://localhost:5500/270/chartgen.png?chart=specSamples&attr=oee&index=90&size=tall
 ```
 
 ## Unity Chart generation usage:
 
-None of the values should be null.
+None of the values should be null, except the isTall directive for samples chart.
 ``` cs
 GetKPI(string station)
 GetCycleTime(string station)
 
-GetSample(string station, string attr, int index) // if index is not set by the it should be the max value
+GetSample(string station, string attr, int index, bool isTall) // if index is not set by the slider it should be the max value
 ```

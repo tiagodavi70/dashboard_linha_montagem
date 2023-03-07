@@ -23,7 +23,8 @@ public class ChartGen : MonoBehaviour
         // getchartfromurl("");
         // GetKPI("260");
         // GetCycleTime("260");
-        GetSample("260", "oee", 80);
+        // GetSample("260", "oee", 80);
+        // GetSample("260", "oee", 100, true);
     }
 
     // Update is called once per frame
@@ -40,14 +41,13 @@ public class ChartGen : MonoBehaviour
     {
         getchartfromurl(base_url.Replace("station", station).Replace("address", Getaddress()) + "specCycleTime");
     }
-    public void GetSample(string station, string attr, int index)
+    public void GetSample(string station, string attr, int index, bool isTall=false)
     {
-        getchartfromurl(base_url.Replace("station", station).Replace("address", Getaddress()) + $"specSamples&attr={attr}&index={index}");
+        getchartfromurl(base_url.Replace("station", station).Replace("address", Getaddress()) + $"specSamples&attr={attr}&index={index}" + (isTall ? "&size=tall":""));
     }
 
     public void getchartfromurl(String url)
     {
-        // TODO: new datatype constraint 
         StartCoroutine(GetRequest(url));
     }
 

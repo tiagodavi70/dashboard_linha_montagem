@@ -132,10 +132,12 @@ function sendVisImg(res, base64string){
 // http://localhost:5500/260/chartgen.png?chart=specSamples&attr=oee
 // http://localhost:5500/290/chartgen.png?chart=specSamples&attr=oee&index=100
 // http://localhost:5500/270/chartgen.png?chart=specSamples&attr=oee&index=90
+// http://localhost:5500/270/chartgen.png?chart=specSamples&attr=oee&index=90&size=tall
 app.get('/:station/chartgen.png', function (req, res) {
     logging(req.originalUrl);
 
     req.query.img = false;
+
     let params = req.query;
     params.station = req.params.station;
     params.id = ["specKPI", "specCycleTime", "specSamples"].indexOf(params.chart) + 1;
