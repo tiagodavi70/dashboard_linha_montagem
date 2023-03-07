@@ -1,15 +1,22 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Networking;
-using System.Linq;
 
 
 public class ChartGen : MonoBehaviour
 {
     // Start is called before the first frame update
-    string base_url = "http://localhost:5500/station/chartgen.png?chart=";
+    string base_url = "http://address:5500/station/chartgen.png?chart=";
+    
+    [SerializeField]
+    private string Address = "localhost";
+
+    public string Getaddress()
+    { return Address; }
+    public void Setaddress(string value)
+    { Address = value; }
+
 
     void Start()
     {
@@ -27,15 +34,15 @@ public class ChartGen : MonoBehaviour
 
     public void GetKPI(string station)
     {
-        getchartfromurl(base_url.Replace("station", station) + "specKPI");
+        getchartfromurl(base_url.Replace("station", station).Replace("address", Getaddress()) + "specKPI");
     }
     public void GetCycleTime(string station)
     {
-        getchartfromurl(base_url.Replace("station", station) + "specCycleTime");
+        getchartfromurl(base_url.Replace("station", station).Replace("address", Getaddress()) + "specCycleTime");
     }
     public void GetSample(string station, string attr, int index)
     {
-        getchartfromurl(base_url.Replace("station", station) + $"specSamples&attr={attr}&index={index}");
+        getchartfromurl(base_url.Replace("station", station).Replace("address", Getaddress()) + $"specSamples&attr={attr}&index={index}");
     }
 
     public void getchartfromurl(String url)
@@ -75,7 +82,7 @@ public class ChartGen : MonoBehaviour
 
             string[] pages = uri.Split('/');
             int page = pages.Length - 1;
-            
+            Debug.Log(uri);
             if (webRequest.result == UnityWebRequest.Result.ConnectionError)
             {
                 Debug.Log(pages[page] + ": Error: " + webRequest.error);

@@ -72,7 +72,7 @@ app.get("/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi/current-shift", (
     // delete url_query.endDate
     // let data = filter(url_query["station"], kpi, url_query)
     // res.send(JSON.stringify(data));
-    res.send(JSON.stringify(JSON.parse(fs.readFileSync(`./simulation/KPICurrentShift${url_query["station"]}.json`))))
+    res.send(JSON.stringify(JSON.parse(fs.readFileSync(`./DadosSimulados/KPICurrentShift${url_query["station"]}.json`))))
 });
 
 // http://localhost:5500/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi?line=10&station=260&startDate=2022-12-02&endDate=2022-12-03
