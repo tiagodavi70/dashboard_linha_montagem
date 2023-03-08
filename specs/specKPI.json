@@ -178,7 +178,7 @@
               "mark": {"type": "text", "fill": "white"},
               "encoding": {
                 "size": {"value": 16},
-                "text": {"value": ["partCountSetPoint: 100", "Target: 100"]}
+                "text": {"value": ["partCountNOK: 0", "Target: 0.02"]}
               }
             },
             {
@@ -188,17 +188,17 @@
                   "encoding": {
                     "fill": {
                       "aggregate": "mean",
-                      "field": "partCountSetPoint",
+                      "field": "countNIO",
                       "scale": {
-                        "domain": [0, 95, 105],
+                        "domain": [0, 0.019, 0.021],
                         "range": ["red", "yellow", "green"]
                       },
                       "type": "quantitative"
                     },
                     "size": {
                       "aggregate": "mean",
-                      "field": "partCountSetPoint",
-                      "scale": {"domain": [0, 200], "range": [3000, 500]},
+                      "field": "countNIO",
+                      "scale": {"domain": [0, 0.04], "range": [3000, 500]},
                       "type": "quantitative"
                     }
                   }
@@ -209,7 +209,7 @@
                     "opacity": {"value": 0},
                     "text": {
                       "aggregate": "mean",
-                      "field": "partCountSetPoint",
+                      "field": "countNIO",
                       "format": ".4",
                       "type": "quantitative"
                     }

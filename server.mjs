@@ -12,6 +12,7 @@ const __dirname = path.dirname(__filename);
 import fs from 'fs';
 import ChartGenerator from './genchart.mjs';
 
+
 const port = 5500
 
 const username = '8b9f2e5b-8524-4de5-8472-7e7de6b37864';
@@ -93,13 +94,6 @@ app.get("/it/application/api/augmanity-pps4-dummy/d/v1/api/bottlenecks/actual", 
     res.send(JSON.stringify(bottleneck));
 });
 
-// app.post("log", (req,res) =>{
-// });
-
-function logging(url) {
-
-}
-
 function sendVis(req, res, base64string){
     // if (!req.headers['user-agent'].includes("Unity"))
 	// 	if (!req.query.svg) {
@@ -156,6 +150,14 @@ app.get('/:station/chartgen.png', function (req, res) {
             sendVis(req, res, base64string);
         }
     }).catch((err) => { console.error(err); });
+});
+
+app.use(express.urlencoded({ extended: true }));
+
+let count = 0;
+app.post("/log", function(req, res){
+    count++;
+    // fs.writeFileSync(`simulation_results/log_${count}_id_${req.body.id}_task_${req.body.task}.json`, JSON.stringify(req.body));
 });
 
 app.listen(port, () => {

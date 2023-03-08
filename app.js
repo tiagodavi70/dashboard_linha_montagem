@@ -146,7 +146,6 @@ function loadVis(vistype, attr) {
     if (vistype == 0) return;
 
     let spec = JSON.parse(JSON.stringify(specs[vistype-1]));
-
     spec = specManip(spec, attr)
 
     function vis(spec, attr) {

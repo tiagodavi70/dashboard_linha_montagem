@@ -21,18 +21,23 @@ function specManip(specRaw, attr, options=undefined) {
         spec.data.url = isCycle ?
             "./simulation/CycleTimes.json" : 
             "./simulation/KPI.json";
-    
+
+        let max = isCycle ?
+            times_data.filter(d => d.station == station).length :
+            kpi_data.filter(d => d.station == station).length;
+
+        let slider_value = max;
+
         if (!options) {
-            if (d3.select("#interaction-index").nodes()[0].children) {
-                let max = isCycle ?
-                            times_data.filter(d => d.station == station).length :
-                            kpi_data.filter(d => d.station == station).length;
+            if (d3.select("#interaction-index").nodes()[0].children.length == 0) {
                 d3.select("#interaction-index").html(`
                   <input type="range" id="index_slider" name="index_slider" min="0" max="${max}" value="${max}">
                   <label for="index_slider">Samples: <div id="label_value"> ${max} </div></label>`);
                 d3.select("#index_slider").on("input", function(e,d) {
                     d3.select("#label_value").text(+this.value);
-                }).on("slider_end")
+                }).on("change ", function(e,d) {
+                    loadVis(3, attr);
+                });
             }
         } 
         spec.layer[0].transform[0] = {"filter": `datum.station == ${station}`};
@@ -40,21 +45,27 @@ function specManip(specRaw, attr, options=undefined) {
         
         spec.layer[0].encoding["y"].field = attr;
 
-        let slider_value = 100;
         if (options) {
-            slider_value = options.index;
-        } else {
-            slider_value = d3.select("#index_slider").attr("value");
+            slider_value = options.index || max;
+            if (options.size == "tall") {
+                spec.width  = 200;
+                spec.height = 300;
+            }
+        }
+         else {
+            slider_value = d3.select("#index_slider").property("value");
         }
         spec.transform[0].filter = `datum.index >= 0 && datum.index < ${slider_value}`;
         spec.transform[1].calculate = "" + targetsjson[attr];
 
-        spec.layer[1].encoding.y.title = `${attr} and target in red`;
-
-        if (options.size == "tall") {
-            spec.width = 200;
-            spec.height = 300;
+        let titles = {"oee": "%", "partCount": "pieces", "fpy": "%", "countNIO": "pieces", "productivity": "pieces / man * hour"};
+        let y_title = "seconds";
+        if (Object.keys(titles).includes(attr)){
+            y_title = titles[attr];
+            spec.layer[0].encoding.x.title = `shifts`;
         }
+        spec.layer[0].encoding.y.title = `${y_title}`;
+        spec.layer[1].encoding.y.title = `${y_title}`; //  and target in green        
     }
     return spec;
 }

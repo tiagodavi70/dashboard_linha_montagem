@@ -107,6 +107,10 @@ img#banner_img{
     text-align: right;
 }
 
+#index_slider {
+    width:400px;
+}
+
 #interaction-index {
     padding: 2vw;
 }

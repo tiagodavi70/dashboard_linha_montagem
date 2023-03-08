@@ -3,7 +3,7 @@
     "processTime": 30,
     "exitTime": 5,
     "changeTime": 10,
-    "partCountNIO": 0.02,
+    "countNIO": 0.02,
     "productivity": 97,
     "oee": 88.5,
     "fpy": 0.87,

@@ -93,6 +93,7 @@
                 .style("transition", "all 0.3s ease-out")
                 .on("click", function(e,d) {
                     selectStation(sn(this));
+                    logValue({"event": `select_station`, "station": station_selected, "element": "map"}, e);
                 }).on("mouseover", function(e,d) {}).on("mouseout", function(e,d) {});
             
             let stations = stationsSelect.nodes();
@@ -130,4 +131,69 @@
             loadSpecs();
         });
 	</script>
+    <script>
+        /* Event handling - generic
+        userTestMonitoringAR.txt:
+        ID_PARTICIPANTE,TASK_NUMBER,TASK_COMPLETION_TIME,NUMBER_OF_CLICKS_TO_TO_COMPLETE_THE_TASK
+
+        userTestEvents.txt
+        ID_PARTICIPANTE,TASK_NUMBER,TIME_OF_EVENT,TASK_CLICK_NUMBER,EVENT
+
+        EVENT:
+        Open: xxx -> Abrir painel com pinch
+        xxx/.../xxx -> Button clicked
+        xxx/.../SampleNumberSlider -> Slider released
+        */
+        // id, task, timestamp, event, element 
+        // events {}
+        //  
+        function logValue(obj,e=undefined) {
+            let url = new URL(window.location.href);
+            obj.id = url.searchParams.get("id");
+            obj.task = url.searchParams.get("task");
+            obj.timestamp = Date.now();
+            if (e) {
+                obj.lx = e.clientX;
+                obj.ly = e.clientY;
+            }
+            sendData(obj);
+            // console.log(JSON.stringify(obj));
+        }
+
+        function sendData(data) {
+            console.log('Sending data');
+
+            const XHR = new XMLHttpRequest();
+            const urlEncodedDataPairs = [];
+
+            // Turn the data object into an array of URL-encoded key/value pairs.
+            for (const [name, value] of Object.entries(data)) {
+                urlEncodedDataPairs.push(`${encodeURIComponent(name)}=${encodeURIComponent(value)}`);
+            }
+
+            // Combine the pairs into a single string and replace all %-encoded spaces to
+            // the '+' character; matches the behavior of browser form submissions.
+            const urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
+
+            // Define what happens on successful data submission
+            XHR.addEventListener('load', (event) => {
+                alert('Yeah! Data sent and response loaded.');
+            });
+
+            // Define what happens ind case of an error
+            XHR.addEventListener('error', (event) => {
+                // alert('Oops! Something went wrong.');
+                console.log("event error");
+            });
+
+            // Set up our request
+            XHR.open('POST', 'http://localhost:5500/log');
+
+            // Add the required HTTP header for form data POST requests
+            XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            // Finally, send our data.
+            // XHR.send(urlEncodedData);
+        }
+    </script>
 </html>

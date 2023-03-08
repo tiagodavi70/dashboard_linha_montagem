@@ -14,7 +14,12 @@
     {
       "mark": {"type": "line", "color": "gold"},
       "encoding": {
-        "x": {"field": "index", "type": "quantitative", "sort": "descending"},
+        "x": {
+          "field": "index",
+          "sort": "descending",
+          "title": "samples",
+          "type": "quantitative"
+        },
         "y": {"field": "totalCycleTime", "type": "quantitative"}
       },
       "transform": [{"filter": "datum.station == '260'"}]
@@ -23,11 +28,7 @@
       "mark": {"type": "rule", "color": "green"},
       "encoding": {
         "size": {"value": 2},
-        "y": {
-          "field": "target",
-          "title": "totalCycleTime and target in red",
-          "type": "quantitative"
-        }
+        "y": {"field": "target", "title": "seconds", "type": "quantitative"}
       },
       "transform": [{"filter": "datum.station == '260'"}]
     }
