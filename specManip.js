@@ -23,8 +23,8 @@ function specManip(specRaw, attr, options=undefined) {
             "./simulation/KPI.json";
 
         let max = isCycle ?
-            times_data.filter(d => d.station == station).length :
-            kpi_data.filter(d => d.station == station).length;
+            cycle.filter(d => d.station == station).length :
+            kpi.filter(d => d.station == station).length;
 
         let slider_value = max;
 

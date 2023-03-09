@@ -53,7 +53,9 @@
             </div>
         </div>
     </body>
-    
+    <script>
+        const base_url = "localhost";
+    </script>
     <script src="app.js"></script>
     <script src="specManip.js"></script>
 	<script type="text/javascript">
@@ -187,7 +189,7 @@
             });
 
             // Set up our request
-            XHR.open('POST', 'http://localhost:5500/log');
+            XHR.open('POST', `http://${base_url}:5500/log`);
 
             // Add the required HTTP header for form data POST requests
             XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
