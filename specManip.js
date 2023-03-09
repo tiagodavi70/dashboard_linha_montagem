@@ -60,7 +60,7 @@ function specManip(specRaw, attr, options=undefined) {
 
         let titles = {"oee": "%", "partCount": "pieces", "fpy": "%", "countNIO": "pieces", "productivity": "pieces / man * hour"};
         let y_title = "seconds";
-        if (Object.keys(titles).includes(attr)){
+        if (!isCycle){
             y_title = titles[attr];
             spec.layer[0].encoding.x.title = `shifts`;
         }

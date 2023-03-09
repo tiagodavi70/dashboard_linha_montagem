@@ -14,6 +14,7 @@ d3.select("#close_icon").on("click", function(event, d) {
     mode = 0;
     d3.select("#svgLoaded").style("display", "block");
     d3.select("#vis-container").style("display", "none");
+    
 });
 
 d3.select("#features_icon").on("click", function(event, d) {
@@ -130,15 +131,30 @@ function selectStation(stationNumber) {
     d3.select(`#item_${stationNumber}`).style("background-color", bc);
     d3.select(stationMap).style("fill", bc);
 
-    if (station_selected == stationNumber)
+    if (station_selected == stationNumber) {
         station_selected = -1;
+        clearSelection();
+    }
     else
         station_selected = stationNumber;
+
+    if (mode != 0) {
+        loadVis(mode, lastAttr);
+    }
 }
 
 function clearSelection() {
     station_selected = -1;
-
+    mode = 0;
+    loadVis(mode);
+    
+    let station_list = d3.select("#station-list")
+        .selectAll("div.station-item");
+    station_list.style("background-color", mainColor);
+    stationsSelect.style("fill", mainColor);
+    
+    d3.select("#svgLoaded").style("display", "block");
+    d3.select("#vis-container").style("display", "none");
 }
 
 function loadVis(vistype, attr) {

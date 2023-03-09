@@ -128,8 +128,6 @@ function sendVisImg(res, base64string){
 // http://localhost:5500/270/chartgen.png?chart=specSamples&attr=oee&index=90
 // http://localhost:5500/270/chartgen.png?chart=specSamples&attr=oee&index=90&size=tall
 app.get('/:station/chartgen.png', function (req, res) {
-    logging(req.originalUrl);
-
     req.query.img = false;
 
     let params = req.query;

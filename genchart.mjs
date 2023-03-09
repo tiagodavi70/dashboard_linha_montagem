@@ -19,7 +19,7 @@ export default class ChartGenerator {
             if (this.selector === "svg")
                 return await view.toSVG().catch((err) => {console.error(err);}); // return svg string
 
-            let canvas =  await view.toCanvas(this.settings.id == "specSamples"? 2 : 4).catch((err) => {console.error(err);}); // return canvas stream
+            let canvas =  await view.toCanvas(this.settings.id == 3? 2 : 4).catch((err) => {console.error(err);}); // return canvas stream
 
             return canvas.toDataURL().split("base64,")[1];
         };
