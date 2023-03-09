@@ -138,6 +138,9 @@ app.get('/:station/chartgen.png', function (req, res) {
     params.kpi = kpi_station;
     params.cycle = cycle_station;
     params.targets = targets;
+
+    params.kpi_data = kpi;
+    params.cycle_data = cycletimes;
     
     let chartgen = new ChartGenerator(params);
     

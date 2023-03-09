@@ -6,6 +6,9 @@ function specManip(specRaw, attr, options=undefined) {
     let cycle = options? options.cycle : cycle_station;
     let targetsjson = options? options.targets : targets;
 
+    let times_arr = options? options.cycle_data : times_data;
+    let kpi_arr   = options? options.kpi_data : kpi_data;
+
     let specType = spec.id ? spec.id : options.id;
 
     if ((specType == 1 || specType == 2) ) {
@@ -23,8 +26,8 @@ function specManip(specRaw, attr, options=undefined) {
             "./simulation/KPI.json";
 
         let max = isCycle ?
-            cycle.filter(d => d.station == station).length :
-            kpi.filter(d => d.station == station).length;
+            times_arr.filter(d => d.station == station).length :
+            kpi_arr.filter(d => d.station == station).length;
 
         let slider_value = max;
 
