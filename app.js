@@ -9,34 +9,45 @@ let specs = [];
 let cycleTimes = {"00": "totalCycleTime", "01": "processTime", "10": "exitTime", "11": "changeTime"};
 let kpis = {"00": "oee", "01": "fpy", "10": "partCount", "11": "partCountSetPoint", "12": "productivity"};
 
-
 d3.select("#close_icon").on("click", function(event, d) {
+    logValue({"event": `close_vis`, "station": station_selected, "element": "icon"}, event);
+
     mode = 0;
     d3.select("#svgLoaded").style("display", "block");
     d3.select("#vis-container").style("display", "none");
-    
 });
 
 d3.select("#features_icon").on("click", function(event, d) {
+    logValue({"event": `show_kpi`, "station": station_selected, "element": "icon"}, event);
+
     if (station_selected != -1) { // mode == 0
         mode = 1;
         d3.select("#svgLoaded").style("display", "none");
         d3.select("#vis-container").style("display", "block");
         loadVis(mode);
+    } else {
+
     }
 });
 
 d3.select("#cycle_icon").on("click", function(event, d) {
+    logValue({"event": `show_cycle`, "station": station_selected, "element": "icon"}, event);
+
     if (station_selected != -1) {
         mode = 2;
         d3.select("#svgLoaded").style("display", "none");
         d3.select("#vis-container").style("display", "block");
         loadVis(mode);
+    } else {
+
     }
 });
 
 d3.select("#filter_icon").on("click", function(event, d) {
+    logValue({"event": `show_filters`, "station": station_selected, "element": "icon"}, event);
+    
     let iMenu = d3.select("#interaction-menu");
+    
     if (iMenu.style("display") == "none") {
         iMenu.style("display", "block");
     } else {
@@ -44,7 +55,43 @@ d3.select("#filter_icon").on("click", function(event, d) {
     }
 });
 
+d3.select("#text-prompt").text("1 - Indicate which stations have cycle times with delays.");
+d3.select("#task_icon").on("click", function(event, d) {
+    logValue({"event": `finish_task`, "station": station_selected, "element": "icon"}, event);
+    clearSelection();
+    d3.select("#text-prompt").text(getTextTask(task_number))
+    task_number++;
+    if (task_number >= 6) {
+        sendData(tasks);
+    }
+});
 
+function getTextTask(taskCounter) {
+    switch (taskCounter) {
+        case 1: {
+            return "2 - Verify which KPIs are below the target in station 260.";
+            break;
+        }
+        case 2: {
+            return "3 - Walk to the station causing the line bottlenck."; 
+            break;
+        }
+        case 3: {
+            return "4 - Indicate the OEE value in station 290, 10 shifts ago.";
+            break;
+        }
+                    
+        case 4: {
+            return "5 - Verify which shifts, from the last 10, are above the target value in the PartCount indicator in station 260.";
+            break;
+        }
+        default: {
+            return "User test completed!";
+            break;
+        }
+    }
+}
+ 
 function loadSpecs() {
     Promise.all([d3.json("specs/specKPI.json"), d3.json("specs/specCycleTime.json"),
                  d3.json("specs/specSamples.json")]
@@ -107,8 +154,7 @@ function createList(stations) {
                     </svg>
                 </div>
             `).on("click", function(event, d) {
-                // const e = station_list.nodes();
-                // const i = e.indexOf(this);
+                logValue({"event": `select_station`, "station": station_selected, "element": "list"}, event);
                 selectStation(sn(d));
             });
 }
@@ -187,9 +233,16 @@ function loadVis(vistype, attr) {
                     } else if (spec.id == 1 || spec.id == 2) {
                         let key_index = (item.mark.name["concat_".length]) + (item.mark.name["concat_x_concat_".length])
                         let samples = {"3": kpis, "4": cycleTimes};
-                        loadVis(3, samples[""+(+spec.id + 2)][key_index])
+                        let ar = samples[""+(+spec.id + 2)][key_index];
+
+                        logValue({"event": `select_attr`, "station": station_selected, "element": "vis",
+                                  "vis_id": spec.id, "attr": ar}, event);
+                        
+                        loadVis(3, ar);
                     }
-                } 
+                } else {
+                    logValue({"event": `void_selection`, "station": station_selected, "element": "vis", "vis-id": spec.id}, event);
+                }
             });
         })
     }

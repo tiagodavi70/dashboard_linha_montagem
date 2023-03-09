@@ -158,7 +158,12 @@ app.use(express.urlencoded({ extended: true }));
 let count = 0;
 app.post("/log", function(req, res){
     count++;
-    // fs.writeFileSync(`simulation_results/log_${count}_id_${req.body.id}_task_${req.body.task}.json`, JSON.stringify(req.body));
+    console.log(req.body);
+    fs.writeFile(`simulation_results/log_id_${count}.json`, req.body, function(err) {
+        if(err) {
+            return console.log(err);
+        }
+    });
 });
 
 app.listen(port, () => {

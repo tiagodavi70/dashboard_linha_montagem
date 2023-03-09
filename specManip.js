@@ -33,14 +33,20 @@ function specManip(specRaw, attr, options=undefined) {
 
         if (!options) {
             if (d3.select("#interaction-index").nodes()[0].children.length == 0) {
+                let max_ = isCycle? 100:60;
+                let min_ = isCycle? 5:3;
+                
                 d3.select("#interaction-index").html(`
-                  <input type="range" id="index_slider" name="index_slider" min="0" max="${max}" value="${max}">
-                  <label for="index_slider">Samples: <div id="label_value"> ${max} </div></label>`);
-                d3.select("#index_slider").on("input", function(e,d) {
-                    d3.select("#label_value").text(+this.value);
-                }).on("change ", function(e,d) {
-                    loadVis(3, attr);
-                });
+                    <label for="index_slider"><div id="label_value"> ${(isCycle?"Samples":"Shifts") + ": " + max_} </div></label>
+                    <input type="range" id="index_slider" name="index_slider" min="${min_}" max="${max_}" value="${max}">
+                `);
+                d3.select("#index_slider")
+                    .on("input", function(e,d) {
+                        d3.select("#label_value").text((isCycle?"Samples":"Shifts")+ ": " + this.value);
+                    }).on("change ", function(e,d) {
+                        logValue({"event": `set_slider`, "station": station_selected, "element": "vis", "value": this.value, "vis_id": spec.id, "attr": attr}, e);
+                        loadVis(3, attr);
+                    });
             }
         } 
         spec.layer[0].transform[0] = {"filter": `datum.station == ${station}`};
@@ -63,7 +69,7 @@ function specManip(specRaw, attr, options=undefined) {
 
         let titles = {"oee": "%", "partCount": "pieces", "fpy": "%", "countNIO": "pieces", "productivity": "pieces / man * hour"};
         let y_title = "seconds";
-        if (!isCycle){
+        if (!isCycle) {
             y_title = titles[attr];
             spec.layer[0].encoding.x.title = `shifts`;
         }

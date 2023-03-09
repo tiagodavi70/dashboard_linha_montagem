@@ -12,7 +12,10 @@ body {
     /* height: 90vh; */
     clear: both;
     padding: 10vh;
+}
 
+#interaction-container {
+    margin-left: 4vw;
 }
 
 #menu-stations {
@@ -58,10 +61,10 @@ body {
 } */
 
 .icon {
-    width: 4vw;
-    height: 4vw;
-    margin: 1vh;
-    padding: 1vh;
+    width: 2.5vw;
+    height: 2.5vw;
+    margin: .8vh;
+    padding: .8vh;
     background-color: rgb(18, 36, 110);
     cursor: pointer;
 }
@@ -69,6 +72,7 @@ body {
 #container {
     display: flex;
     vertical-align: middle;
+    padding-top: 4vh;
 }
 
 /* banner */
@@ -98,8 +102,13 @@ img#banner_img{
 }
 
 #vis-container {
-    margin: 6vh;
-    width: 55vw;
+    margin: 3vh;
+    width: 42vw;
+    /* height: 30vh; */
+}
+
+#vis1 {
+    margin-left: 4vw;
 }
 
 #station-container {
@@ -113,4 +122,13 @@ img#banner_img{
 
 #interaction-index {
     padding: 2vw;
+}
+
+#text-prompt {
+    border: thick double white;
+    background-color: rgb(18, 36, 110);
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    padding: 1vw;
+    margin-left: 1vw;
 }

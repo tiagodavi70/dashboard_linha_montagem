@@ -1,11 +1,12 @@
 <html>
+    <meta charset="utf-8">
     <head>
         <title> Sandbox </title>
-        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script charset="utf-8" src="./lib/d3.js"></script>
         
-        <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.6.0"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
+        <script charset="utf-8" src="./lib/vega.js"></script>
+        <script charset="utf-8" src="./lib/vega-lite.js"></script>
+        <script charset="utf-8" src="./lib/vega-embed.js"></script>
 
         <link rel="stylesheet" type="text/css" href="style.css" /> 
     </head>
@@ -37,6 +38,13 @@
                 </div>
             </div>
             <div id="station-container">
+                <div id="evaluation-prompt">
+                    <div id="text-prompt">
+
+                    </div>
+                    <img class="icon" id="task_icon" src="icons/confirmIconWhite.png"> <img/>
+                    <!-- <button id="task-confirm"></button> -->
+                </div>
                 <div id="station-group" >
                     <h1> </h1>
                     <div id="menu-stations">
@@ -55,6 +63,7 @@
     </body>
     <script>
         const base_url = "localhost";
+        // const base_url = "192.168.1.141";
     </script>
     <script src="app.js"></script>
     <script src="specManip.js"></script>
@@ -65,6 +74,9 @@
         let stationsSelect = "";
         let kpi_data = [], times_data = [], bottleneck = {};
         let kpi_station = {}, cycle_station = {};
+        let task_number = 1;
+        let id = 0;
+        let tasks = [];
 
         window.onload = function() {
             let svgObj = document.getElementById("svgLoaded");
@@ -87,8 +99,8 @@
             stationsSelect = d3.select(stationsLayer).selectAll("rect");
             
             stationsSelect
-                .attr("width", function() { return d3.select(this).attr("width") }) // * 2
-                .attr("height", function() { return d3.select(this).attr("height") })
+                .attr("width", function() { return d3.select(this).attr("width") * 2 }) // * 2
+                .attr("height", function() { return d3.select(this).attr("height") * 2 })
                 .style("fill", mainColor)
                 .style("fill-opacity", .8)
                 .style("cursor", "pointer")
@@ -102,9 +114,9 @@
             let texts = d3.select(stationsLayer).selectAll("text")
                 .data(stations)
                 .join("text")
-                    .attr("x", d => +d3.select(d).attr("x") + +d3.select(d).attr("height") * .14)
-                    .attr("y", d => +d3.select(d).attr("y") + +d3.select(d).attr("width") * .64)
-                    .style("font-size", 100)
+                    .attr("x", d => +d3.select(d).attr("x") + +d3.select(d).attr("height") * .14 )
+                    .attr("y", d => +d3.select(d).attr("y") + +d3.select(d).attr("width") * .64 )
+                    .style("font-size", 100 * 2)
                     .style("fill", "white")
                     .attr("pointer-events", "none")
                     .text(d => sn(d));
@@ -131,6 +143,10 @@
             let c_helper = s => times_data.filter(d=>+d.station==s);
             cycle_station = {"260": [c_helper(260)[0]], "270": [c_helper(270)[0]], "290": [c_helper(290)[0]]};
             loadSpecs();
+            let url = new URL(window.location.href);            
+            id = url.searchParams.get("id");
+            tasks.id = id;
+            task_number = 1;
         });
 	</script>
     <script>
@@ -150,16 +166,15 @@
         // events {}
         //  
         function logValue(obj,e=undefined) {
-            let url = new URL(window.location.href);
-            obj.id = url.searchParams.get("id");
-            obj.task = url.searchParams.get("task");
+            obj.id = id; 
+            obj.task = task_number; 
             obj.timestamp = Date.now();
             if (e) {
                 obj.lx = e.clientX;
                 obj.ly = e.clientY;
             }
-            sendData(obj);
-            // console.log(JSON.stringify(obj));
+            // sendData(obj);
+            tasks.push(obj);
         }
 
         function sendData(data) {
@@ -167,7 +182,7 @@
 
             const XHR = new XMLHttpRequest();
             const urlEncodedDataPairs = [];
-
+            
             // Turn the data object into an array of URL-encoded key/value pairs.
             for (const [name, value] of Object.entries(data)) {
                 urlEncodedDataPairs.push(`${encodeURIComponent(name)}=${encodeURIComponent(value)}`);
@@ -178,15 +193,15 @@
             const urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
 
             // Define what happens on successful data submission
-            XHR.addEventListener('load', (event) => {
-                alert('Yeah! Data sent and response loaded.');
-            });
+            // XHR.addEventListener('load', (event) => {
+            //     // alert('Yeah! Data sent and response loaded.');
+            // });
 
             // Define what happens ind case of an error
-            XHR.addEventListener('error', (event) => {
-                // alert('Oops! Something went wrong.');
-                console.log("event error");
-            });
+            // XHR.addEventListener('error', (event) => {
+            //     // alert('Oops! Something went wrong.');
+            //     console.log("event error");
+            // });
 
             // Set up our request
             XHR.open('POST', `http://${base_url}:5500/log`);
@@ -195,7 +210,7 @@
             XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
             // Finally, send our data.
-            // XHR.send(urlEncodedData);
+            XHR.send(JSON.stringify(data));
         }
     </script>
 </html>

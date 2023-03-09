@@ -41,16 +41,16 @@ let url = names[0]; // bottleneck
 let bottleneck_dataset = [];
 
 function datagen() {
-    let c260 = JSON.parse(fs.readFileSync(`./DadosSimulados/CycleTimes260.json`)).map((d,i) => { d.station=260; d.index=i;  return d})
-    let c270 = JSON.parse(fs.readFileSync(`./DadosSimulados/CycleTimes270.json`)).map((d,i) => { d.station=270; d.index=i;  return d})
-    let c290 = JSON.parse(fs.readFileSync(`./DadosSimulados/CycleTimes290.json`)).map((d,i) => { d.station=290; d.index=i;  return d})
+    let c260 = JSON.parse(fs.readFileSync(`./DadosSimulados/CycleTimes260.json`)).map((d,i) => { d.station=260; d.index=i + 1;  return d})
+    let c270 = JSON.parse(fs.readFileSync(`./DadosSimulados/CycleTimes270.json`)).map((d,i) => { d.station=270; d.index=i + 1;  return d})
+    let c290 = JSON.parse(fs.readFileSync(`./DadosSimulados/CycleTimes290.json`)).map((d,i) => { d.station=290; d.index=i + 1;  return d})
     let cycledata = c260.concat(c270).concat(c290);
     // fs.writeFileSync(`./simulation/CycleTimes.csv`, d3.csvFormat(cycledata));
     fs.writeFileSync(`./simulation/CycleTimes.json`, JSON.stringify(cycledata));
 
-    let k260 = JSON.parse(fs.readFileSync(`./DadosSimulados/KPITimeSeries260.json`)).map((d,i) => { d.station=260; d.index=i;  return d})
-    let k270 = JSON.parse(fs.readFileSync(`./DadosSimulados/KPITimeSeries270.json`)).map((d,i) => { d.station=270; d.index=i;  return d})
-    let k290 = JSON.parse(fs.readFileSync(`./DadosSimulados/KPITimeSeries290.json`)).map((d,i) => { d.station=290; d.index=i;  return d})
+    let k260 = JSON.parse(fs.readFileSync(`./DadosSimulados/KPITimeSeries260.json`)).map((d,i) => { d.station=260; d.index=i + 1;  return d})
+    let k270 = JSON.parse(fs.readFileSync(`./DadosSimulados/KPITimeSeries270.json`)).map((d,i) => { d.station=270; d.index=i + 1;  return d})
+    let k290 = JSON.parse(fs.readFileSync(`./DadosSimulados/KPITimeSeries290.json`)).map((d,i) => { d.station=290; d.index=i + 1;  return d})
     let kpidata = k260.concat(k270).concat(k290);
     // fs.writeFileSync(`./simulation/KPI.csv`, d3.csvFormat(kpidata));
     fs.writeFileSync(`./simulation/KPI.json`, JSON.stringify(kpidata));
