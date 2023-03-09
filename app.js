@@ -57,8 +57,8 @@ d3.select("#filter_icon").on("click", function(event, d) {
 
 d3.select("#text-prompt").text("1 - Indicate which stations have cycle times with delays.");
 d3.select("#task_icon").on("click", function(event, d) {
-    logValue({"event": `finish_task`, "station": station_selected, "element": "icon"}, event);
     clearSelection();
+    logValue({"event": `finish_task`, "station": station_selected, "element": "icon"}, event);
     d3.select("#text-prompt").text(getTextTask(task_number))
     task_number++;
     if (task_number >= 6) {
@@ -116,7 +116,7 @@ function createList(stations) {
         return { "isRed": isRed, "color": isRed ? "crimson": "seagreen", "size": isRed ? status_size/2 : status_size/4};
     };
     let isBootleneck = (station) => {   
-        let isRed = station == bottleneck.station;
+        let isRed = +station == 270; // +bottleneck.station;
         return { "isRed": isRed, "color": isRed ? "crimson": "seagreen", "size": isRed ? status_size/2: status_size/4}
     }
     
@@ -178,7 +178,6 @@ function selectStation(stationNumber) {
     d3.select(stationMap).style("fill", bc);
 
     if (station_selected == stationNumber) {
-        station_selected = -1;
         clearSelection();
     }
     else

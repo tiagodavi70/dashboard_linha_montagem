@@ -11,7 +11,11 @@ body {
     width: 20vw;
     /* height: 90vh; */
     clear: both;
-    padding: 10vh;
+    padding: 5vh;
+    margin-left: auto;
+    display: inline-block;
+    text-align: right;
+    margin-right: 10vw;
 }
 
 #interaction-container {
@@ -98,11 +102,11 @@ img#banner_img{
 /* floormap */
 
 #floormap-container {
-    padding-top: 9vh;
+    padding-top: 3vh;
 }
 
 #vis-container {
-    margin: 3vh;
+    margin: 2vh;
     width: 42vw;
     /* height: 30vh; */
 }
@@ -111,17 +115,15 @@ img#banner_img{
     margin-left: 4vw;
 }
 
-#station-container {
-    display: inline-block;
-    text-align: right;
-}
+
 
 #index_slider {
     width:400px;
 }
 
 #interaction-index {
-    padding: 2vw;
+    padding: 1vw;
+    margin-left: 4vw;
 }
 
 #text-prompt {

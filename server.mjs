@@ -159,7 +159,7 @@ let count = 0;
 app.post("/log", function(req, res){
     count++;
     console.log(req.body);
-    fs.writeFile(`simulation_results/log_id_${count}.json`, req.body, function(err) {
+    fs.writeFile(`simulation_results/log_id_${count}.json`, `[${Object.keys(req.body)[0]}]`, function(err) {
         if(err) {
             return console.log(err);
         }
