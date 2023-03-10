@@ -127,7 +127,6 @@ function sendVisImg(res, base64string){
 // http://localhost:5500/290/chartgen.png?chart=specSamples&attr=oee&index=100
 // http://localhost:5500/270/chartgen.png?chart=specSamples&attr=oee&index=90
 // http://localhost:5500/270/chartgen.png?chart=specSamples&attr=oee&index=90&size=tall
-
 let params_arr = [];
 let count_vis = 0;
 app.get('/:station/chartgen.png', function (req, res) {
@@ -148,27 +147,26 @@ app.get('/:station/chartgen.png', function (req, res) {
     
     let chartgen = new ChartGenerator(params);
     // .replace("\\","")
-    fs.writeFile(`simulation_results/chart_params_id_${count_vis}.json`, `${JSON.stringify(params_arr)}`, function(err) {
-        params_arr = [];
-        count_vis++;
-        if(err) {
-            return console.log(err);
-        }
-    });
+    // fs.writeFile(`simulation_results/chart_params_id_${count_vis}.json`, `${JSON.stringify(params_arr)}`, function(err) {
+    //     params_arr = [];
+    //     count_vis++;
+    //     if(err) {
+    //         return console.log(err);
+    //     }
+    // });
 
     chartgen.generateChart().then(base64string => {
         if (params.img) {
             sendVisImg(res, base64string);
         } else {
             sendVis(req, res, base64string);
-            
         }
     }).catch((err) => { console.error(err); });
 });
 
 app.use(express.urlencoded({ extended: true }));
 
-let count = 10;
+let count = 6;
 app.post("/log", function(req, res){
     count++;
     console.log(req.body);

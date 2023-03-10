@@ -9,6 +9,8 @@ let specs = [];
 let cycleTimes = {"00": "totalCycleTime", "01": "processTime", "10": "exitTime", "11": "changeTime"};
 let kpis = {"00": "oee", "01": "fpy", "10": "partCount", "11": "partCountSetPoint", "12": "productivity"};
 
+
+// ordem dos botoes
 d3.select("#close_icon").on("click", function(event, d) {
     logValue({"event": `close_vis`, "station": station_selected, "element": "icon"}, event);
 
