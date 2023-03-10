@@ -33,7 +33,7 @@
               "mark": {"type": "text", "fill": "white"},
               "encoding": {
                 "size": {"value": 16},
-                "text": {"value": ["oee: 78.69", "Target: 88.5"]}
+                "text": {"value": ["oee: 60", "Target: 100"]}
               }
             },
             {
@@ -42,19 +42,20 @@
                   "mark": {"type": "circle", "fill": "red"},
                   "encoding": {
                     "fill": {
-                      "aggregate": "mean",
                       "field": "oee",
                       "scale": {
-                        "domain": [0, 84.075, 92.925],
-                        "range": ["red", "yellow", "green"]
+                        "domain": [60, 0.67, 92, 0.0196, 97],
+                        "range": ["red", "red", "yellow", "green", "green"]
                       },
-                      "type": "quantitative"
+                      "type": "nominal"
                     },
                     "size": {
-                      "aggregate": "mean",
                       "field": "oee",
-                      "scale": {"domain": [0, 177], "range": [3000, 500]},
-                      "type": "quantitative"
+                      "scale": {
+                        "domain": [60, 0.67, 92, 0.0196, 97],
+                        "range": [3000, 3000, 2200, 5, 5]
+                      },
+                      "type": "nominal"
                     }
                   }
                 },
@@ -80,7 +81,7 @@
               "mark": {"type": "text", "fill": "white"},
               "encoding": {
                 "size": {"value": 16},
-                "text": {"value": ["fpy: -1.0", "Target: 0.87"]}
+                "text": {"value": ["fpy: 0.67", "Target: 0.9"]}
               }
             },
             {
@@ -89,19 +90,20 @@
                   "mark": {"type": "circle", "fill": "red"},
                   "encoding": {
                     "fill": {
-                      "aggregate": "mean",
                       "field": "fpy",
                       "scale": {
-                        "domain": [0, 0.8265, 0.9135],
-                        "range": ["red", "yellow", "green"]
+                        "domain": [60, 0.67, 92, 0.0196, 97],
+                        "range": ["red", "red", "yellow", "green", "green"]
                       },
-                      "type": "quantitative"
+                      "type": "nominal"
                     },
                     "size": {
-                      "aggregate": "mean",
                       "field": "fpy",
-                      "scale": {"domain": [0, 1.74], "range": [3000, 500]},
-                      "type": "quantitative"
+                      "scale": {
+                        "domain": [60, 0.67, 92, 0.0196, 97],
+                        "range": [3000, 3000, 2200, 5, 5]
+                      },
+                      "type": "nominal"
                     }
                   }
                 },
@@ -131,7 +133,7 @@
               "mark": {"type": "text", "fill": "white"},
               "encoding": {
                 "size": {"value": 16},
-                "text": {"value": ["partCount: 121", "Target: 96.845"]}
+                "text": {"value": ["partCount: 92", "Target: 100"]}
               }
             },
             {
@@ -140,19 +142,20 @@
                   "mark": {"type": "circle", "fill": "red"},
                   "encoding": {
                     "fill": {
-                      "aggregate": "mean",
                       "field": "partCount",
                       "scale": {
-                        "domain": [0, 92.00274999999999, 101.68725],
-                        "range": ["red", "yellow", "green"]
+                        "domain": [60, 0.67, 92, 0.0196, 97],
+                        "range": ["red", "red", "yellow", "green", "green"]
                       },
-                      "type": "quantitative"
+                      "type": "nominal"
                     },
                     "size": {
-                      "aggregate": "mean",
                       "field": "partCount",
-                      "scale": {"domain": [0, 193.69], "range": [3000, 500]},
-                      "type": "quantitative"
+                      "scale": {
+                        "domain": [60, 0.67, 92, 0.0196, 97],
+                        "range": [3000, 3000, 2200, 5, 5]
+                      },
+                      "type": "nominal"
                     }
                   }
                 },
@@ -178,7 +181,7 @@
               "mark": {"type": "text", "fill": "white"},
               "encoding": {
                 "size": {"value": 16},
-                "text": {"value": ["partCountNOK: 0", "Target: 0.02"]}
+                "text": {"value": ["partCountNOK: 0.0196", "Target: 0"]}
               }
             },
             {
@@ -187,19 +190,20 @@
                   "mark": {"type": "circle", "fill": "red"},
                   "encoding": {
                     "fill": {
-                      "aggregate": "mean",
                       "field": "countNIO",
                       "scale": {
-                        "domain": [0, 0.019, 0.021],
-                        "range": ["red", "yellow", "green"]
+                        "domain": [60, 0.67, 92, 0.0196, 97],
+                        "range": ["red", "red", "yellow", "green", "green"]
                       },
-                      "type": "quantitative"
+                      "type": "nominal"
                     },
                     "size": {
-                      "aggregate": "mean",
                       "field": "countNIO",
-                      "scale": {"domain": [0, 0.04], "range": [3000, 500]},
-                      "type": "quantitative"
+                      "scale": {
+                        "domain": [60, 0.67, 92, 0.0196, 97],
+                        "range": [3000, 3000, 2200, 5, 5]
+                      },
+                      "type": "nominal"
                     }
                   }
                 },
@@ -225,7 +229,7 @@
               "mark": {"type": "text", "fill": "white"},
               "encoding": {
                 "size": {"value": 16},
-                "text": {"value": ["productivity: 0", "Target: 97"]}
+                "text": {"value": ["productivity: 97", "Target: 97"]}
               }
             },
             {
@@ -234,19 +238,20 @@
                   "mark": {"type": "circle", "fill": "red"},
                   "encoding": {
                     "fill": {
-                      "aggregate": "mean",
                       "field": "productivity",
                       "scale": {
-                        "domain": [0, 92.14999999999999, 101.85000000000001],
-                        "range": ["red", "yellow", "green"]
+                        "domain": [60, 0.67, 92, 0.0196, 97],
+                        "range": ["red", "red", "yellow", "green", "green"]
                       },
-                      "type": "quantitative"
+                      "type": "nominal"
                     },
                     "size": {
-                      "aggregate": "mean",
                       "field": "productivity",
-                      "scale": {"domain": [0, 194], "range": [3000, 500]},
-                      "type": "quantitative"
+                      "scale": {
+                        "domain": [60, 0.67, 92, 0.0196, 97],
+                        "range": [3000, 3000, 2200, 5, 5]
+                      },
+                      "type": "nominal"
                     }
                   }
                 },
@@ -269,13 +274,13 @@
       ]
     }
   ],
-  "data": {"name": "data-times"},
+  "data": {"name": "data-b73a0db957f3c2b1ca320ef900799a9a"},
   "resolve": {"scale": {"fill": "independent", "size": "independent"}},
   "transform": [
     {
       "lookup": "station",
       "from": {
-        "data": {"name": "data-kpi"},
+        "data": {"name": "data-1848b79e2298e2930de38ec7bb70950a"},
         "key": "station",
         "fields": [
           "shiftIdentifier",
@@ -301,40 +306,38 @@
   ],
   "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json",
   "datasets": {
-    "data-times": [
+    "data-b73a0db957f3c2b1ca320ef900799a9a": [
       {
-        "Reference": 9999999989,
-        "SerialNumber": "83700220220239999999989",
-        "changeTime": -1,
-        "exitTime": -1,
+        "reference": 9999999989,
+        "serialNumber": "83700220220239999999989",
         "line": 10,
-        "myKey": 99009,
-        "processTime": 0,
+        "id": 99009,
         "station": 260,
         "timeStamp": "2023-02-22T05:45:03.138231100",
-        "totalCycleTime": -1,
-        "id": null,
-        "serialNumber": null,
-        "reference": null
+        "totalCycleTime": 60,
+        "processTime": 30,
+        "changeTime": 10,
+        "exitTime": 5,
+        "index": 1
       }
     ],
-    "data-kpi": [
+    "data-1848b79e2298e2930de38ec7bb70950a": [
       {
         "shiftIdentifier": 0,
-        "locationId": 10,
-        "validFrom": "2022-10-03T04:45:00+01:00",
-        "validTo": "2022-10-03T12:45:00+01:00",
-        "oee": 78.69,
+        "locationId": "000000000010",
+        "validFrom": "2023-02-24T12:45:00+00:00",
+        "validTo": "2023-02-24T13:45:00+00:00",
+        "oee": 60,
         "oeeSetpoint": 100,
-        "availability": 83.81,
-        "efficiency": 96.18,
-        "quality": 98.7,
-        "fpy": -1,
-        "fpySetPoint": -1,
-        "partCount": 121,
+        "availability": 88.98,
+        "efficiency": 118.33,
+        "quality": 93.69,
+        "fpy": 0.67,
+        "fpySetPoint": 0.9375,
+        "partCount": 92,
         "partCountSetPoint": 100,
-        "countNIO": 0,
-        "productivity": 0,
+        "countNIO": 0.0196,
+        "productivity": 97,
         "station": 260
       }
     ]

@@ -62,9 +62,9 @@
         </div>
     </body>
     <script>
-        // const base_url = "localhost";
+        const base_url = "localhost";
         // const base_url = "192.168.1.141";
-        const base_url = "192.168.1.175";
+        // const base_url = "192.168.1.175";
 
     </script>
     <script src="app.js"></script>
@@ -142,6 +142,7 @@
             kpi_station = { "260": [values[4]].map(d=>{d.station = 260; return d}),
                             "270": [values[5]].map(d=>{d.station = 270; return d}),
                             "290": [values[6]].map(d=>{d.station = 290; return d})};
+            console.log(kpi_station)
             let c_helper = s => times_data.filter(d=>+d.station==s);
             cycle_station = {"260": [c_helper(260)[0]], "270": [c_helper(270)[0]], "290": [c_helper(290)[0]]};
             loadSpecs();
@@ -149,6 +150,7 @@
             id = url.searchParams.get("id");
             tasks.id = id;
             task_number = 1;
+            logValue({"event": `start_evaluation`, "station": station_selected, "element": "page"});
         });
 	</script>
     <script>

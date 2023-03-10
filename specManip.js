@@ -12,10 +12,10 @@ function specManip(specRaw, attr, options=undefined) {
     let specType = spec.id ? spec.id : options.id;
 
     if ((specType == 1 || specType == 2) ) {
-        spec.transform[1] = {"filter": `datum.station == ${station}`};
+        // spec.transform[1] = {"filter": `datum.station == ${station}`};
         
-        spec.datasets["data-kpi"] = kpi[station];
-        spec.datasets["data-times"] = cycle[station];
+        // spec.datasets["data-kpi"] = kpi['260'];
+        // spec.datasets["data-times"] = cycle[station];
     } else if (specType == 3) {
         // https://raw.githubusercontent.com/tiagodavi70/dashboard_linha_montagem/main
         let isCycle = Object.values(
