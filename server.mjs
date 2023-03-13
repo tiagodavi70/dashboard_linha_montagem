@@ -130,17 +130,17 @@ function sendVisImg(res, base64string){
     res.end(img);
 }
 
-// http://localhost:5500/260/chartgen.png?chart=specKPI
-// http://localhost:5500/260/chartgen.png?chart=specCycleTime
-// http://localhost:5500/260/chartgen.png?chart=specSamples&attr=oee
-// http://localhost:5500/290/chartgen.png?chart=specSamples&attr=oee&index=100
-// http://localhost:5500/270/chartgen.png?chart=specSamples&attr=oee&index=90
-// http://localhost:5500/270/chartgen.png?chart=specSamples&attr=oee&index=90&size=tall
-// http://localhost:5500/270/chartgen.png?chart=specSamples&attr=oee&index=30,90&size=tall
+// http://localhost:5500/30/chartgen.png?chart=specKPI
+// http://localhost:5500/30/chartgen.png?chart=specCycleTime
+// http://localhost:5500/30/chartgen.png?chart=specSamples&attr=oee
+// http://localhost:5500/30/chartgen.png?chart=specSamples&attr=oee&index=1,100
+// http://localhost:5500/30/chartgen.png?chart=specSamples&attr=oee&index=1,90
+// http://localhost:5500/30/chartgen.png?chart=specSamples&attr=oee&index=1,90&size=tall
+// http://localhost:5500/30/chartgen.png?chart=specSamples&attr=oee&index=30,90&size=tall
 let params_arr = [];
-let count_vis = 0;
+
 app.get('/:station/chartgen.png', function (req, res) {
-    req.query.img = true;
+    req.query.img = false;
 
     let params = req.query;
     params.station = req.params.station;
