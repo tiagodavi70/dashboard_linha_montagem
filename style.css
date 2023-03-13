@@ -135,3 +135,7 @@ img#banner_img{
     padding: 1vw;
     margin-left: 1vw;
 }
+
+.noUi-connect{
+    background: rgb(18, 36, 110);
+}

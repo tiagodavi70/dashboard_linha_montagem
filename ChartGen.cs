@@ -41,9 +41,9 @@ public class ChartGen : MonoBehaviour
     {
         getchartfromurl(base_url.Replace("station", station).Replace("address", Getaddress()) + "specCycleTime");
     }
-    public void GetSample(string station, string attr, int index, bool isTall=false)
+    public void GetSample(string station, string attr, int index1, int index2, GameObject go, bool isTall = false)
     {
-        getchartfromurl(base_url.Replace("station", station).Replace("address", Getaddress()) + $"specSamples&attr={attr}&index={index}" + (isTall ? "&size=tall":""));
+        getchartfromurl(base_url.Replace("station", station).Replace("address", Getaddress()) + $"specSamples&attr={attr}&index={index1},{index2}" + (isTall ? "&size=tall" : ""), go, isTall);
     }
 
     public void getchartfromurl(String url)

@@ -65,35 +65,40 @@ d3.select("#task_icon").on("click", function(event, d) {
     logValue({"event": `finish_task`, "station": station_selected, "element": "icon"}, event);
     d3.select("#text-prompt").text(getTextTask(task_number))
     task_number++;
-    if (task_number >= 6) {
+    if (task_number >= 9) {
         sendData(tasks);
     }
 });
 
 function getTextTask(taskCounter) {
-    switch (taskCounter) {
-        case 1: {
-            return "2 - Verify which KPIs are below the target in station 260.";
-            break;
+
+    switch (taskCounter)
+        {
+            case 1:
+                return "2 - Verify which KPIs are below the target in station 10.";
+                break;
+            case 2:
+                return "3 - Walk to the station causing the line bottlenck.";
+                break;
+            case 3:
+                return "4 - Summarize task 1-3 in the paper.";
+                break;
+            case 4:
+                return "5 - Approximately, what is the minimum and maximum PartCount value of station 70 in the last 60 shifts?";
+                break;
+            case 5:
+                return "6 - Indicate the process time value of station 90 10 shifts ago.";
+                break;
+            case 6:
+                return "7 - Which station had the best total cycle time in the last 10 samples? (stations 20, 60, 71 and 100).";
+                break;
+            case 7:
+                return "8 - Observe the OEE between 20 and 30 samples, from station 110, and tell which ones are above the target.";
+                break;
+            default:
+                return "User test completed!";
+                break;
         }
-        case 2: {
-            return "3 - Walk to the station causing the line bottlenck."; 
-            break;
-        }
-        case 3: {
-            return "4 - Indicate the OEE value in station 290, 10 shifts ago.";
-            break;
-        }
-                    
-        case 4: {
-            return "5 - Verify which shifts, from the last 10, are above the target value in the PartCount indicator in station 260.";
-            break;
-        }
-        default: {
-            return "User test completed!";
-            break;
-        }
-    }
 }
  
 function loadSpecs() {

@@ -36,60 +36,89 @@ function specManip(specRaw, attr, options=undefined) {
 
         if (!options) {
             if (d3.select("#interaction-index").nodes()[0].children.length == 0) {
-
                 d3.select("#interaction-index").html(`
-                    <label for="index_slider"><div id="label_value"> ${(isCycle?"Samples":"Shifts") + ": " + max_} </div></label>
-                    <input type="range" id="index_slider" name="index_slider" min="${min_}" max="${max_}" value="${max_}">
+                    <label for="index_slider">
+                        <div id="label_value"  style="margin-bottom: 2vh"> Last  ${min_} to ${max_} ${(isCycle?"Samples":"Shifts") + ": "} </div>
+                    </label>
+                    <div id=index_slider><div>
                 `);
-                d3.select("#index_slider")
-                    .on("mousedown", function(e, d) {
-                        logValue({"event": `start_slider`, "station": station_selected, "element": "slider", "value": this.value, "vis_id": spec.id, "attr": attr}, e);
-                    })
-                    .on("input", function(e, d) {
-                        logValue({"event": `update_slider`, "station": station_selected, "element": "slider", "value": this.value, "vis_id": spec.id, "attr": attr}, e);
-                        d3.select("#label_value").text((isCycle?"Samples":"Shifts")+ ": " + this.value); 
-                    }).on("change ", function(e, d) {
-                        logValue({"event": `set_slider`, "station": station_selected, "element": "slider", "value": this.value, "vis_id": spec.id, "attr": attr}, e);
-                        loadVis(3, attr);
-                    });
+                
+                let slider = document.getElementById('index_slider');
+                noUiSlider.create(slider, {
+                    start: [min_, max_],
+                    connect: true,
+                    range: {
+                        'min': min_,
+                        'max': max_
+                    }
+                });
+                slider.noUiSlider.on('start', function (values, handle) {
+                    logValue({"event": `start_slider`, "station": station_selected, "element": "slider", "value_min": values[0], "value_max": values[1], "vis_id": spec.id, "attr": attr});
+                });
+
+                slider.noUiSlider.on('update', function (values, handle) {
+                    logValue({"event": `update_slider`, "station": station_selected, "element": "slider", "value_min": values[0], "value_max": values[1], "vis_id": spec.id, "attr": attr});
+                    d3.select("#label_value").text(`Last  ${(+values[0]).toFixed()} to ${(+values[1]).toFixed()} ${(isCycle?"Samples":"Shifts") + ": "}`);
+                });
+                
+                slider.noUiSlider.on('change', function (values, handle) {
+                    logValue({"event": `set_slider`, "station": station_selected, "element": "slider", "value_min": values[0], "value_max": values[1], "vis_id": spec.id, "attr": attr});
+                    loadVis(3, attr);
+                });
+
+                // d3.select("#index_slider")
+                //     .on("mousedown", function(e, d) {
+                //         logValue({"event": `start_slider`, "station": station_selected, "element": "slider", "value": this.value, "vis_id": spec.id, "attr": attr}, e);
+                //     })
+                //     .on("input", function(e, d) {
+                //         logValue({"event": `update_slider`, "station": station_selected, "element": "slider", "value": this.value, "vis_id": spec.id, "attr": attr}, e);
+                //         d3.select("#label_value").text((isCycle?"Samples":"Shifts")+ ": " + this.value); 
+                //     }).on("change ", function(e, d) {
+                //         logValue({"event": `set_slider`, "station": station_selected, "element": "slider", "value": this.value, "vis_id": spec.id, "attr": attr}, e);
+                //         loadVis(3, attr);
+                //     });
             }
         }
-// Sequence generator function (commonly referred to as "range", e.g. Clojure, PHP, etc.)
+        // Sequence generator function (commonly referred to as "range", e.g. Clojure, PHP, etc.)
         const range = (start, stop, step) =>
             Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + i * step);
-
-        // spec.layer[1].encoding.x.axis.values = range(1, max_, 5);
-        // spec.layer[2].encoding.x.axis.values = range(1, max_, 5);
 
         spec.layer[1].encoding["y"].field = attr;
         spec.layer[2].encoding["y"].field = attr;
         spec.layer[2].encoding["text"].field = attr;
 
-        if (options) {
-            slider_value_max = +options.index[1] || max_;
-            slider_value_min = +options.index[0] || min_;
-            if (options.size == "tall") {
-                spec.width  = 200;
-                spec.height = 300;
-            }
-        } else {
-            slider_value_max = d3.select("#index_slider").property("value");
-        }
-        
         if (slider_value_max - slider_value_min < 16) {
             spec.layer[2].encoding.opacity.value = 1;
         } else {
             spec.layer[2].encoding.opacity.value = 0;
         }
 
-        spec.transform[0].filter = `datum.index >= ${slider_value_min} && datum.index <= ${slider_value_max} && datum.station == ${station}`;
-        
+        let tall_option = false; 
+        if (options) {
+            slider_value_max = +options.index[1] || max_;
+            slider_value_min = +options.index[0] || min_;
+            if (options.size == "tall") {
+                spec.width  = 200;
+                spec.height = 300;
+                spec.layer[2].encoding.opacity.value = 0;
+                tall_option = true;
+            }
+        } else {
+            let slider = document.getElementById('index_slider');
+            let vs = slider.noUiSlider.get();
+            console.log(slider.noUiSlider.get())
+            slider_value_min = +(+vs[0]).toFixed(); 
+            slider_value_max = +(+vs[1]).toFixed();
+        }
+
         spec.layer[1].encoding.x.scale.domain = [slider_value_min, slider_value_max];
         spec.layer[2].encoding.x.scale.domain = [slider_value_min, slider_value_max];
-        spec.layer[1].encoding.x.axis.values  = range(slider_value_min, slider_value_max, Math.floor(slider_value_max/20));
-        spec.layer[2].encoding.x.axis.values  = range(slider_value_min, slider_value_max, Math.floor(slider_value_max/20));
-
-        // console.log(spec.layer[1].encoding.x.axis.values)
+        console.log(Math.max(Math.floor(slider_value_max/20), 1), Math.floor(slider_value_max/20), slider_value_max, slider_value_max/20, slider_value_min)
+        spec.layer[1].encoding.x.axis.values  = range(slider_value_min, slider_value_max, Math.max(Math.floor(slider_value_max/20), 1) * (!tall_option ? 1:2));
+        spec.layer[2].encoding.x.axis.values  = range(slider_value_min, slider_value_max, Math.max(Math.floor(slider_value_max/20), 1) * (!tall_option ? 1:2));
+        
+        spec.transform[0].filter = `datum.index >= ${slider_value_min} && datum.index <= ${slider_value_max} && datum.station == ${station}`;
+        
 
         spec.transform[1].calculate = "" + targetsjson[attr];
 
@@ -100,7 +129,7 @@ function specManip(specRaw, attr, options=undefined) {
             spec.layer[1].encoding.x.title = `shifts`;
         }
         spec.layer[0].encoding.y.title = `${y_title}`;
-        spec.layer[1].encoding.y.title = `${y_title}`; //  and target in green        
+        spec.layer[1].encoding.y.title = `${y_title}`; // and target in green        
     }
     return spec;
 }
