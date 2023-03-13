@@ -1,0 +1,45 @@
+{
+  "config": {
+    "view": {"continuousWidth": 400, "continuousHeight": 300},
+    "axis": {"labelColor": "white", "titleColor": "white"},
+    "background": "#122973",
+    "header": {
+      "labelColor": "#122973",
+      "labelFontSize": 14,
+      "titleColor": "#122973",
+      "titleFontSize": 14
+    }
+  },
+  "layer": [
+    {
+      "mark": {"type": "line", "color": "gold"},
+      "encoding": {
+        "x": {
+          "field": "index",
+          "sort": "descending",
+          "title": "samples",
+          "type": "quantitative"
+        },
+        "y": {"field": "totalCycleTime", "type": "quantitative"}
+      },
+      "transform": [{"filter": "datum.station == '260'"}]
+    },
+    {
+      "mark": {"type": "rule", "color": "green"},
+      "encoding": {
+        "size": {"value": 2},
+        "y": {"field": "target", "title": "seconds", "type": "quantitative"}
+      },
+      "transform": [{"filter": "datum.station == '260'"}]
+    }
+  ],
+  "data": {
+    "url": "https://raw.githubusercontent.com/tiagodavi70/dashboard_linha_montagem/main/simulation/CycleTimes.json"
+  },
+  "transform": [
+    {"filter": "datum.index >= 0 && datum.index < 100"},
+    {"calculate": "40", "as": "target"}
+  ],
+  "width": 600,
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json"
+}

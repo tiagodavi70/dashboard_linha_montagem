@@ -53,10 +53,18 @@ function specManip(specRaw, attr, options=undefined) {
                     });
             }
         }
-        spec.layer[0].transform[0] = {"filter": `datum.station == ${station}`};
-        spec.layer[1].transform[0] = {"filter": `datum.station == ${station}`};
-        
-        spec.layer[0].encoding["y"].field = attr;
+
+        spec.layer[1].encoding.x.axis.values = d3.range(1, max_, 5);
+        spec.layer[2].encoding.x.axis.values = d3.range(1, max_, 5);
+
+        spec.layer[1].encoding["y"].field = attr;
+        spec.layer[2].encoding["y"].field = attr;
+
+        if (max_ - min_ < 15) {
+            spec.layer[2].encoding.opacity.value = 1;
+        } else {
+            spec.layer[2].encoding.opacity.value = 0;
+        }
 
         if (options) {
             slider_value = options.index || max_;
@@ -67,14 +75,16 @@ function specManip(specRaw, attr, options=undefined) {
         } else {
             slider_value = d3.select("#index_slider").property("value");
         }
-        spec.transform[0].filter = `datum.index >= 0 && datum.index <= ${slider_value}`;
+        spec.transform[0].filter = `datum.index >= 0 && datum.index <= ${slider_value} && datum.station == ${station}`;
+        spec.layer[1].encoding.x.scale.domain = [1, slider_value];
+        spec.layer[2].encoding.x.scale.domain = [1, slider_value];
         spec.transform[1].calculate = "" + targetsjson[attr];
 
         let titles = {"oee": "%", "partCount": "pieces", "fpy": "%", "countNIO": "pieces", "productivity": "pieces / man * hour"};
         let y_title = "seconds";
         if (!isCycle) {
             y_title = titles[attr];
-            spec.layer[0].encoding.x.title = `shifts`;
+            spec.layer[1].encoding.x.title = `shifts`;
         }
         spec.layer[0].encoding.y.title = `${y_title}`;
         spec.layer[1].encoding.y.title = `${y_title}`; //  and target in green        

@@ -12,32 +12,100 @@
   },
   "layer": [
     {
+      "mark": {"type": "rule", "color": "green"},
+      "encoding": {
+        "size": {"value": 2.5},
+        "y": {"field": "target", "title": "seconds", "type": "quantitative"}
+      }
+    },
+    {
       "mark": {"type": "line", "color": "gold"},
       "encoding": {
         "x": {
+          "axis": {
+            "format": "d",
+            "tickCount": 20,
+            "title": "samples",
+            "values": [
+              1,
+              6,
+              11,
+              16,
+              21,
+              26,
+              31,
+              36,
+              41,
+              46,
+              51,
+              56,
+              61,
+              66,
+              71,
+              76,
+              81,
+              86,
+              91,
+              96
+            ]
+          },
           "field": "index",
+          "scale": {"domain": [1, 100]},
           "sort": "descending",
           "title": "samples",
           "type": "quantitative"
         },
         "y": {"field": "totalCycleTime", "type": "quantitative"}
-      },
-      "transform": [{"filter": "datum.station == '260'"}]
+      }
     },
     {
-      "mark": {"type": "rule", "color": "green"},
+      "mark": {"type": "text", "color": "white", "dy": -10, "size": 15},
       "encoding": {
-        "size": {"value": 2},
-        "y": {"field": "target", "title": "seconds", "type": "quantitative"}
-      },
-      "transform": [{"filter": "datum.station == '260'"}]
+        "opacity": {"value": 0},
+        "text": {"field": "totalCycleTime", "type": "quantitative"},
+        "x": {
+          "axis": {
+            "format": "d",
+            "tickCount": 20,
+            "title": "samples",
+            "values": [
+              1,
+              6,
+              11,
+              16,
+              21,
+              26,
+              31,
+              36,
+              41,
+              46,
+              51,
+              56,
+              61,
+              66,
+              71,
+              76,
+              81,
+              86,
+              91,
+              96
+            ]
+          },
+          "field": "index",
+          "scale": {"domain": [1, 100]},
+          "sort": "descending",
+          "title": "samples",
+          "type": "quantitative"
+        },
+        "y": {"field": "totalCycleTime", "type": "quantitative"}
+      }
     }
   ],
   "data": {
     "url": "https://raw.githubusercontent.com/tiagodavi70/dashboard_linha_montagem/main/simulation/CycleTimes.json"
   },
   "transform": [
-    {"filter": "datum.index >= 0 && datum.index < 100"},
+    {"filter": "datum.index >= 1 && datum.index <= 100 && datum.station==30"},
     {"calculate": "40", "as": "target"}
   ],
   "width": 600,
