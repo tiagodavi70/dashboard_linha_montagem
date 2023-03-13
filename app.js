@@ -209,11 +209,11 @@ function selectStation(stationNumber) {
     d3.select(`#item_${stationNumber}`).style("background-color", bc);
     d3.select(stationMap).style("fill", bc);
 
-    if (station_selected == stationNumber) {
-        clearSelection();
-    }
-    else
-        station_selected = stationNumber;
+    // if (station_selected == stationNumber) {
+    //     clearSelection();
+    // }
+    // else
+    station_selected = stationNumber;
 
     if (mode != 0) {
         loadVis(mode, lastAttr);
