@@ -140,7 +140,7 @@ function sendVisImg(res, base64string){
 let params_arr = [];
 
 app.get('/:station/chartgen.png', function (req, res) {
-    req.query.img = false;
+    req.query.img = true;
 
     let params = req.query;
     params.station = req.params.station;

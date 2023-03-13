@@ -87,11 +87,6 @@ function specManip(specRaw, attr, options=undefined) {
         spec.layer[2].encoding["y"].field = attr;
         spec.layer[2].encoding["text"].field = attr;
 
-        if (slider_value_max - slider_value_min < 16) {
-            spec.layer[2].encoding.opacity.value = 1;
-        } else {
-            spec.layer[2].encoding.opacity.value = 0;
-        }
 
         let tall_option = false; 
         if (options) {
@@ -100,26 +95,32 @@ function specManip(specRaw, attr, options=undefined) {
             if (options.size == "tall") {
                 spec.width  = 200;
                 spec.height = 300;
-                spec.layer[2].encoding.opacity.value = 0;
+                // spec.layer[2].encoding.opacity.value = 0;
                 tall_option = true;
             }
         } else {
             let slider = document.getElementById('index_slider');
             let vs = slider.noUiSlider.get();
-            console.log(slider.noUiSlider.get())
             slider_value_min = +(+vs[0]).toFixed(); 
             slider_value_max = +(+vs[1]).toFixed();
+        }
+        
+        if (slider_value_max - slider_value_min < 16) {
+            spec.layer[2].encoding.opacity.value = 1;
+        } else {
+            spec.layer[2].encoding.opacity.value = 0;
+        }
+
+        if (tall_option) {
+            // spec.layer[2].encoding.opacity.value = 0;
         }
 
         spec.layer[1].encoding.x.scale.domain = [slider_value_min, slider_value_max];
         spec.layer[2].encoding.x.scale.domain = [slider_value_min, slider_value_max];
-        console.log(Math.max(Math.floor(slider_value_max/20), 1), Math.floor(slider_value_max/20), slider_value_max, slider_value_max/20, slider_value_min)
         spec.layer[1].encoding.x.axis.values  = range(slider_value_min, slider_value_max, Math.max(Math.floor(slider_value_max/20), 1) * (!tall_option ? 1:2));
         spec.layer[2].encoding.x.axis.values  = range(slider_value_min, slider_value_max, Math.max(Math.floor(slider_value_max/20), 1) * (!tall_option ? 1:2));
         
         spec.transform[0].filter = `datum.index >= ${slider_value_min} && datum.index <= ${slider_value_max} && datum.station == ${station}`;
-        
-
         spec.transform[1].calculate = "" + targetsjson[attr];
 
         let titles = {"oee": "%", "partCount": "pieces", "fpy": "%", "countNIO": "pieces", "productivity": "pieces / man * hour"};
@@ -129,7 +130,7 @@ function specManip(specRaw, attr, options=undefined) {
             spec.layer[1].encoding.x.title = `shifts`;
         }
         spec.layer[0].encoding.y.title = `${y_title}`;
-        spec.layer[1].encoding.y.title = `${y_title}`; // and target in green        
+        spec.layer[1].encoding.y.title = `${y_title}`;
     }
     return spec;
 }
