@@ -21,50 +21,53 @@ function specManip(specRaw, attr, options=undefined) {
         let isCycle = Object.values(
             {"00": "totalCycleTime", "01": "processTime", "10": "exitTime", "11": "changeTime"}
         ).includes(attr);
-        spec.data.url = isCycle ?
-            "./simulation/CycleTimes.json" : 
-            "./simulation/KPI.json";
+        delete spec.data.url
 
-        let max = isCycle ?
-            times_arr.filter(d => d.station == station).length :
-            kpi_arr.filter(d => d.station == station).length;
+        let max_ = isCycle ? 100 : 60;
+        let min_ = isCycle ? 5 : 3;
 
-        let slider_value = max;
+        spec.data.values = (isCycle ? times_arr : kpi_arr).filter( d => d.index < max_ && d.station == station)             
+        // spec.data.url = isCycle ?
+        //     "./simulation/CycleTimes.json" : 
+        //     "./simulation/KPI.json";
+
+        let slider_value = max_;
 
         if (!options) {
             if (d3.select("#interaction-index").nodes()[0].children.length == 0) {
-                let max_ = isCycle? 100:60;
-                let min_ = isCycle? 5:3;
-                
+
                 d3.select("#interaction-index").html(`
                     <label for="index_slider"><div id="label_value"> ${(isCycle?"Samples":"Shifts") + ": " + max_} </div></label>
-                    <input type="range" id="index_slider" name="index_slider" min="${min_}" max="${max_}" value="${max}">
+                    <input type="range" id="index_slider" name="index_slider" min="${min_}" max="${max_}" value="${max_}">
                 `);
                 d3.select("#index_slider")
-                    .on("input", function(e,d) {
-                        d3.select("#label_value").text((isCycle?"Samples":"Shifts")+ ": " + this.value);
-                    }).on("change ", function(e,d) {
-                        logValue({"event": `set_slider`, "station": station_selected, "element": "vis", "value": this.value, "vis_id": spec.id, "attr": attr}, e);
+                    .on("mousedown", function(e, d) {
+                        logValue({"event": `start_slider`, "station": station_selected, "element": "slider", "value": this.value, "vis_id": spec.id, "attr": attr}, e);
+                    })
+                    .on("input", function(e, d) {
+                        logValue({"event": `update_slider`, "station": station_selected, "element": "slider", "value": this.value, "vis_id": spec.id, "attr": attr}, e);
+                        d3.select("#label_value").text((isCycle?"Samples":"Shifts")+ ": " + this.value); 
+                    }).on("change ", function(e, d) {
+                        logValue({"event": `set_slider`, "station": station_selected, "element": "slider", "value": this.value, "vis_id": spec.id, "attr": attr}, e);
                         loadVis(3, attr);
                     });
             }
-        } 
+        }
         spec.layer[0].transform[0] = {"filter": `datum.station == ${station}`};
         spec.layer[1].transform[0] = {"filter": `datum.station == ${station}`};
         
         spec.layer[0].encoding["y"].field = attr;
 
         if (options) {
-            slider_value = options.index || max;
+            slider_value = options.index || max_;
             if (options.size == "tall") {
                 spec.width  = 200;
                 spec.height = 300;
             }
-        }
-         else {
+        } else {
             slider_value = d3.select("#index_slider").property("value");
         }
-        spec.transform[0].filter = `datum.index >= 0 && datum.index < ${slider_value}`;
+        spec.transform[0].filter = `datum.index >= 0 && datum.index <= ${slider_value}`;
         spec.transform[1].calculate = "" + targetsjson[attr];
 
         let titles = {"oee": "%", "partCount": "pieces", "fpy": "%", "countNIO": "pieces", "productivity": "pieces / man * hour"};

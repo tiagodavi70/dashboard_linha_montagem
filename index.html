@@ -18,10 +18,11 @@
         </div>
         <div id="container">
             <div id="floormap-container">
-                <object data="layouts/Planta024.svg" type="image/svg+xml" id="svgLoaded">
+                <object data="layouts/layout2.svg" type="image/svg+xml" id="svgLoaded">
                     <!-- <img src="yourfallback.jpg" /> -->
                 </object>
-                <div id="vis-container" style="display: none;"> 
+                <div id="vis-container" style="display: none;">
+                    <div> Line: XX / Station: XX | ATTR aumentar a bolinha verde | desceleção | ajustar eixo remover decimal </div>
                     <div id="vis1" class="vis-detail"></div>
                     <div id="interaction-index">
                         
@@ -62,9 +63,9 @@
         </div>
     </body>
     <script>
-        // const base_url = "localhost";
+        const base_url = "localhost";
         // const base_url = "192.168.1.141";
-        const base_url = "192.168.1.175";
+        // const base_url = "192.168.1.175";
 
     </script>
     <script src="app.js"></script>
@@ -79,6 +80,7 @@
         let task_number = 1;
         let id = 0;
         let tasks = [];
+        let stationNumbers = ["10", "20", "30", "60", "70", "71", "72", "80", "90", "100", "110", "120"];
 
         window.onload = function() {
             let svgObj = document.getElementById("svgLoaded");
@@ -101,8 +103,8 @@
             stationsSelect = d3.select(stationsLayer).selectAll("rect");
             
             stationsSelect
-                .attr("width", function() { return d3.select(this).attr("width") * 2 }) // * 2
-                .attr("height", function() { return d3.select(this).attr("height") * 2 })
+                .attr("width", function() { return d3.select(this).attr("width") * 2.8 }) // * 2
+                .attr("height", function() { return d3.select(this).attr("height") * 2.8 })
                 .style("fill", mainColor)
                 .style("fill-opacity", .8)
                 .style("cursor", "pointer")
@@ -118,40 +120,48 @@
                 .join("text")
                     .attr("x", d => +d3.select(d).attr("x") + +d3.select(d).attr("height") * .14 )
                     .attr("y", d => +d3.select(d).attr("y") + +d3.select(d).attr("width") * .64 )
-                    .style("font-size", 100 * 2)
+                    .style("font-size", 3)
                     .style("fill", "white")
                     .attr("pointer-events", "none")
                     .text(d => sn(d));
-            
-            stations = stations.sort((a,b) => +sn(a) > +sn(b)? 1:-1 );
-            createList(stations);
-        };
-        
-        Promise.all([d3.json("./simulation/CycleTimes.json"),
+
+            Promise.all([d3.json("./simulation/CycleTimes.json"),
                      d3.json("./simulation/KPI.json"),
                      d3.json("./DadosSimulados/Bottleneck.json"),
                      d3.json("./DadosSimulados/TargetsExtraSim.json")
                     ]
-                    .concat(["260", "270", "290"].map(d=> d3.json(`./DadosSimulados/KPICurrentShift${d}.json`)))
-        ).then(values => {
-            times_data = values[0];
-            kpi_data = values[1];
-            bottleneck = values[2];
-            targets = values[3];
+                    .concat(stationNumbers.map(d=> d3.json(`./DadosSimulados/KPICurrentShift${d}.json`)))
+            ).then(values => {
+                times_data = values[0];
+                kpi_data = values[1];
+                bottleneck = values[2];
+                console.log("Bottleneck: ", bottleneck.station);
+                targets = values[3];
 
-            kpi_station = { "260": [values[4]].map(d=>{d.station = 260; return d}),
-                            "270": [values[5]].map(d=>{d.station = 270; return d}),
-                            "290": [values[6]].map(d=>{d.station = 290; return d})};
-            console.log(kpi_station)
-            let c_helper = s => times_data.filter(d=>+d.station==s);
-            cycle_station = {"260": [c_helper(260)[0]], "270": [c_helper(270)[0]], "290": [c_helper(290)[0]]};
-            loadSpecs();
-            let url = new URL(window.location.href);            
-            id = url.searchParams.get("id");
-            tasks.id = id;
-            task_number = 1;
-            logValue({"event": `start_evaluation`, "station": station_selected, "element": "page"});
-        });
+                let c_helper = s => times_data.filter(d=>+d.station==s);
+                for (let i = 0; i < stationNumbers.length; i++) {
+                    kpi_station[stationNumbers[i]] = [values[4 + i]].map(d=>{d.station = stationNumbers[i]; return d});
+                    cycle_station[stationNumbers[i]] = [c_helper(stationNumbers[i])[0]];
+                }
+                console.log(kpi_station, cycle_station);
+                // kpi_station = { "260": [values[4]].map(d=>{d.station = 260; return d}),
+                //                 "270": [values[5]].map(d=>{d.station = 270; return d}),
+                //                 "290": [values[6]].map(d=>{d.station = 290; return d})};
+                // cycle_station = {"260": [c_helper(260)[0]], "270": [c_helper(270)[0]], "290": [c_helper(290)[0]]};
+
+                loadSpecs();
+                stations = stations.sort((a,b) => +sn(a) > +sn(b)? 1:-1 );
+                createList(stations);
+
+                let url = new URL(window.location.href);            
+                id = url.searchParams.get("id");
+                tasks.id = id;
+                task_number = 1;
+                logValue({"event": `start_evaluation`, "station": station_selected, "element": "page"});
+            });
+        };
+        
+       
 	</script>
     <script>
         /* Event handling - generic
@@ -195,17 +205,6 @@
             // Combine the pairs into a single string and replace all %-encoded spaces to
             // the '+' character; matches the behavior of browser form submissions.
             const urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
-
-            // Define what happens on successful data submission
-            // XHR.addEventListener('load', (event) => {
-            //     // alert('Yeah! Data sent and response loaded.');
-            // });
-
-            // Define what happens ind case of an error
-            // XHR.addEventListener('error', (event) => {
-            //     // alert('Oops! Something went wrong.');
-            //     console.log("event error");
-            // });
 
             // Set up our request
             XHR.open('POST', `http://${base_url}:5500/log`);

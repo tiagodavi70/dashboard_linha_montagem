@@ -1,7 +1,8 @@
 
 let station_selected = -1;
 let mainColor = "rgb(18, 36, 110)";
-let selectionColor = "rgb(111, 111, 111)";
+// let selectionColor = "rgb(111, 111, 111)";
+let selectionColor = "#1c5701";
 let mode = 0; // 0 - map, 1 - kpi, 2 - cycle, 3 - sample kpi, 4 - sample cycle times
 let lastAttr = 0;
 let specs = [];
@@ -9,8 +10,9 @@ let specs = [];
 let cycleTimes = {"00": "totalCycleTime", "01": "processTime", "10": "exitTime", "11": "changeTime"};
 let kpis = {"00": "oee", "01": "fpy", "10": "partCount", "11": "partCountSetPoint", "12": "productivity"};
 
+let kpis_attrs = ["oee", "partCount", "fpy", "countNIO", "productivity"];
+let cycle_attrs = ["totalCycleTime", "exitTime", "processTime", "changeTime"];
 
-// ordem dos botoes
 d3.select("#close_icon").on("click", function(event, d) {
     logValue({"event": `close_vis`, "station": station_selected, "element": "icon"}, event);
 
@@ -59,7 +61,7 @@ d3.select("#filter_icon").on("click", function(event, d) {
 
 d3.select("#text-prompt").text("1 - Indicate which stations have cycle times with delays.");
 d3.select("#task_icon").on("click", function(event, d) {
-    clearSelection();
+    // clearSelection();
     logValue({"event": `finish_task`, "station": station_selected, "element": "icon"}, event);
     d3.select("#text-prompt").text(getTextTask(task_number))
     task_number++;
@@ -109,19 +111,42 @@ function loadSpecs() {
 function sn(node) { return d3.select(node).attr("id").substring(1) }
 
 function createList(stations) {
+    
     let status_size = 15;
     let helper_f = (station, type) => {
-        // let filtered = data.filter(d => d.station == station);
-        // let redCount = 0;
-        let redcheck = {"260": {"cycle": true, "kpi":true}, "270": {"cycle": false, "kpi":false}, "290": {"cycle": false, "kpi":false}}
-        let isRed = redcheck[station][type];
-        return { "isRed": isRed, "color": isRed ? "crimson": "seagreen", "size": isRed ? status_size/2 : status_size/4};
+        let data = (type == "cycle" ? cycle_station[station] : kpi_station[station])[0];
+        let attrs = (type == "cycle" ? cycle_attrs : kpis_attrs);
+
+        let redprops = Object.keys(data)
+            .filter(d => attrs.includes(d))
+            .filter(d => type == "cycle" ? data[d] > targets[d] : data[d] < targets[d])
+            .map(d => data[d]/targets[d]);
+        
+        let redpropsex = Object.keys(data)
+            .filter(d => attrs.includes(d))
+            .filter(d => type == "cycle" ? data[d] > targets[d] : data[d] < targets[d])
+            .map(d => " " + data[d] + " " + targets[d] + " " + d + " " + data[d]/targets[d]);
+
+        let domain = type == "cycle" ? [1, 1.05, 1.1] : [1, .95, .9];
+        let rangeSize = [status_size * .25, status_size * .35, status_size * .55];
+        
+        let scaleColor = d3.scaleLinear()
+                        .domain(domain)
+                        .range(["green", "yellow", "red"]);
+        let scaleSize = d3.scaleLinear()
+                        .domain(domain)
+                        .range(rangeSize);
+        
+        let redprop = redprops.length > 0 ? type == "cycle"? cutminmax(Math.max(...redprops), domain) : cutminmax(Math.min(...redprops), [...domain].reverse())  : 1;
+
+        // console.log(stations, redprops.length > 0, redprops, redpropsex, redprop)
+        return {"color": scaleColor(redprop), "size": scaleSize(redprop)};
     };
     let isBootleneck = (station) => {   
-        let isRed = +station == 270; // +bottleneck.station;
-        return { "isRed": isRed, "color": isRed ? "crimson": "seagreen", "size": isRed ? status_size/2: status_size/4}
+        let isRed = +station == bottleneck.station;
+        return {"color": isRed ? "crimson": "seagreen", "size": isRed ? status_size/2 : status_size/4}
     }
-    
+
     let station_list = d3.select("#station-list")
         .selectAll("div")
             .data(stations)
@@ -204,12 +229,35 @@ function clearSelection() {
     d3.select("#vis-container").style("display", "none");
 }
 
+function getScales(domain, isOrdered=true) {
+    let cr = ["red", "yellow", "green"];
+    let sr = ["10", "8", "3"]
+    let colorScale = d3.scaleLinear()
+                        .domain(domain)
+                        .range(isOrdered ?  cr : [...cr].reverse());
+    let sizeScale = d3.scaleLinear()
+                        .domain(domain)
+                        .range(isOrdered ?  sr : [...sr].reverse());
+
+    return [colorScale, sizeScale];
+}
+
+function cutminmax(d, domain) {
+    let v;
+    if (d < domain[0]) {
+        v =  domain[0];
+    } else if (d > domain[2]) {
+        v = domain[2];
+    } else v = d;
+    return v;
+};
+
 function loadVis(vistype, attr) {
     if (vistype != 3) d3.select("#interaction-index").selectAll("*").remove();
     if (vistype == 0) return;
 
     let spec = JSON.parse(JSON.stringify(specs[vistype-1]));
-    spec = specManip(spec, attr)
+    spec = specManip(spec, attr);
 
     function vis(spec, attr) {
         lastAttr = attr;
@@ -242,10 +290,50 @@ function loadVis(vistype, attr) {
                         loadVis(3, ar);
                     }
                 } else {
-                    logValue({"event": `void_selection`, "station": station_selected, "element": "vis", "vis-id": spec.id}, event);
+                    logValue({"event": `void_selection`, "station": station_selected, "element": "vis", "vis_id": spec.id}, event);
                 }
             });
         })
     }
-    vis(spec, attr);
+    // vis(spec, attr);
+    if (spec.id ==3) {
+        vis(spec, attr);
+    } else {
+        let t = spec.id == 1 ?  {"file":"kpi", "attrs": kpis_attrs, "data": kpi_station} :
+                                {"file":"cycletimes", "attrs": cycle_attrs, "data": cycle_station};
+        d3.text(`svgs/${t.file}.svg`).then(text=> {
+            d3.select("#vis1").html(text);
+
+            for (let i = 0 ; i < t.attrs.length; i++) {
+                let attr = t.attrs[i];
+
+                let tar = targets[attr];
+                let domain = spec.id == 1 ? [tar *.90, tar *.95, tar] : [tar, tar * 1.05, tar * 1.1];
+                if (domain[2] == 0) {
+                    domain = [domain[0] - 0.1, domain[1] - 0.05, domain[2]];
+                }
+                let scales = {...getScales(domain, spec.id == 1)};
+                let colorScale = scales[0];
+                let sizeScale = scales[1];
+
+                // console.log(tar, attr, domain, colorScale.range());
+                d3.select(`#circle${i+1}`)
+                    .style("fill", colorScale(cutminmax(t.data[station_selected][0][attr], domain)))
+                    .attr("r", sizeScale(cutminmax(t.data[station_selected][0][attr], domain)))
+                    .on("click", function(e, d) {
+                        logValue({ "event": `select_attr`, "station": station_selected, "element": "vis",
+                                   "vis_id": spec.id, "attr": attr}, e);
+                        loadVis(3, attr);
+                    })
+                d3.select(`#attr${i+1}`)
+                    .text(`${attr != "countNIO" ? attr : "partCountNOk"}: ${t.data[station_selected][0][attr]}`)
+                    .style("font-family", "monospace")
+                    .style("fill", "white")
+                d3.select(`#target${i+1}`)
+                    .text(`Target: ${tar}`)
+                    .style("font-family", "monospace")
+                    .style("fill", "white")
+            }
+        });
+    }
 }

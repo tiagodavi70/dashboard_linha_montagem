@@ -38,6 +38,7 @@ body {
 
 .station-item {
     font-family: 'Roboto', sans-serif;
+    font-size: 22;
     border-radius: 8px;
     box-shadow: 7px 7px 13px 0px rgba(50, 50, 50, 0.22);
     padding: 2px;

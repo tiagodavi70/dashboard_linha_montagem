@@ -40,12 +40,21 @@ let kpi = rh(`./simulation/KPI.json`);
 let bottleneck = rh(`./DadosSimulados/Bottleneck.json`);
 let targets = rh(`./DadosSimulados/TargetsExtraSim.json`);
 
+let stationNumbers = ["10", "20", "60", "70", "71", "72", "80", "90", "100", "110", "120"];
+
+let kpi_station = {};
+let cycle_station = {};
 let c_helper = s => cycletimes.filter(d=>+d.station==s);
-let cycle_station = {"260": [c_helper(260)[0]], "270": [c_helper(270)[0]], "290": [c_helper(290)[0]]};
-let kpi_station = ["260", "270", "290"].map(d=> rh(`./DadosSimulados/KPICurrentShift${d}.json`))      
-kpi_station = { "260": [kpi_station[0]].map(d=>{d.station = 260; return d}),
-                "270": [kpi_station[1]].map(d=>{d.station = 270; return d}),
-                "290": [kpi_station[2]].map(d=>{d.station = 290; return d})};
+for (let i = 0; i < stationNumbers.length; i++) {
+    kpi_station[stationNumbers[i]] = [rh(`./DadosSimulados/KPICurrentShift${stationNumbers[i]}.json`)].map(d=>{d.station = stationNumbers[i]; return d});
+    cycle_station[stationNumbers[i]] = [c_helper(stationNumbers[i])[0]];
+}
+
+// let cycle_station = {"260": [c_helper(260)[0]], "270": [c_helper(270)[0]], "290": [c_helper(290)[0]]};
+// let kpi_station = ["260", "270", "290"].map(d=> rh(`./DadosSimulados/KPICurrentShift${d}.json`))      
+// kpi_station = { "260": [kpi_station[0]].map(d=>{d.station = 260; return d}),
+//                 "270": [kpi_station[1]].map(d=>{d.station = 270; return d}),
+//                 "290": [kpi_station[2]].map(d=>{d.station = 290; return d})};
 
 function filter(station, list, q) {
     let filtered = list.filter(d => d.station == station);
@@ -166,7 +175,7 @@ app.get('/:station/chartgen.png', function (req, res) {
 
 app.use(express.urlencoded({ extended: true }));
 
-let count = 6;
+let count = 10;
 app.post("/log", function(req, res){
     count++;
     console.log(req.body);

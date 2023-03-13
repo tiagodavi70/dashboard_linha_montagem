@@ -19,7 +19,9 @@ let urls = ["https://ews-emea.api.bosch.com/it/application/api/augmanity-pps4-du
 // "https://ews-emea.api.bosch.com/it/application/api/augmanity-pps4-dummy/d/v1/api/kpi?line=10&station=260"
 
 let names = ["Bottleneck", "CycleTimes", "KPI"];
-let stations = ["15", "140", "160", "170", "200", "210", "215", "220", "225", "240", "250", "260", "270", "273", "290", "320", "320.2", "330"];
+let stations = [ "10", "20", "30", "60", "70", "71", "72", "80", "90", "100", "110", "120"];
+
+// let stations = ["15", "140", "160", "170", "200", "210", "215", "220", "225", "240", "250", "260", "270", "273", "290", "320", "320.2", "330"];
 
 let kpi_block = ["validTo","validFrom", "locationId", "shiftIdentifier"];
 let bottleneck_block = ["timeStamp", "line"];
@@ -41,17 +43,27 @@ let url = names[0]; // bottleneck
 let bottleneck_dataset = [];
 
 function datagen() {
-    let c260 = JSON.parse(fs.readFileSync(`./DadosSimulados/CycleTimes260.json`)).map((d,i) => { d.station=260; d.index=i + 1;  return d})
-    let c270 = JSON.parse(fs.readFileSync(`./DadosSimulados/CycleTimes270.json`)).map((d,i) => { d.station=270; d.index=i + 1;  return d})
-    let c290 = JSON.parse(fs.readFileSync(`./DadosSimulados/CycleTimes290.json`)).map((d,i) => { d.station=290; d.index=i + 1;  return d})
-    let cycledata = c260.concat(c270).concat(c290);
+    // let c260 = JSON.parse(fs.readFileSync(`./DadosSimulados/CycleTimes260.json`)).map((d,i) => { d.station=260; d.index=i + 1;  return d})
+    // let c270 = JSON.parse(fs.readFileSync(`./DadosSimulados/CycleTimes270.json`)).map((d,i) => { d.station=270; d.index=i + 1;  return d})
+    // let c290 = JSON.parse(fs.readFileSync(`./DadosSimulados/CycleTimes290.json`)).map((d,i) => { d.station=290; d.index=i + 1;  return d})
+    // let cycledata = c260.concat(c270).concat(c290);
+    let cycledata = [];
+    for (let i=0; i < stations.length; i++) {
+        let c = JSON.parse(fs.readFileSync(`./DadosSimulados/CycleTimes${stations[i]}.json`)).map((d,j) => { d.station=stations[i]; d.index=j + 1;  return d});
+        cycledata = cycledata.concat(c);
+    }
     // fs.writeFileSync(`./simulation/CycleTimes.csv`, d3.csvFormat(cycledata));
     fs.writeFileSync(`./simulation/CycleTimes.json`, JSON.stringify(cycledata));
 
-    let k260 = JSON.parse(fs.readFileSync(`./DadosSimulados/KPITimeSeries260.json`)).map((d,i) => { d.station=260; d.index=i + 1;  return d})
-    let k270 = JSON.parse(fs.readFileSync(`./DadosSimulados/KPITimeSeries270.json`)).map((d,i) => { d.station=270; d.index=i + 1;  return d})
-    let k290 = JSON.parse(fs.readFileSync(`./DadosSimulados/KPITimeSeries290.json`)).map((d,i) => { d.station=290; d.index=i + 1;  return d})
-    let kpidata = k260.concat(k270).concat(k290);
+    // let k260 = JSON.parse(fs.readFileSync(`./DadosSimulados/KPITimeSeries260.json`)).map((d,i) => { d.station=260; d.index=i + 1;  return d})
+    // let k270 = JSON.parse(fs.readFileSync(`./DadosSimulados/KPITimeSeries270.json`)).map((d,i) => { d.station=270; d.index=i + 1;  return d})
+    // let k290 = JSON.parse(fs.readFileSync(`./DadosSimulados/KPITimeSeries290.json`)).map((d,i) => { d.station=290; d.index=i + 1;  return d})
+    // let kpidata = k260.concat(k270).concat(k290);
+    let kpidata = [];
+    for (let i = 0; i < stations.length; i++) {
+        let c = JSON.parse(fs.readFileSync(`./DadosSimulados/KPITimeSeries${stations[i]}.json`)).map((d,j) => { d.station=stations[i]; d.index=j + 1;  return d});
+        kpidata = kpidata.concat(c);
+    }
     // fs.writeFileSync(`./simulation/KPI.csv`, d3.csvFormat(kpidata));
     fs.writeFileSync(`./simulation/KPI.json`, JSON.stringify(kpidata));
 }

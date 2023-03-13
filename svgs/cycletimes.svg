@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="146.82838mm"
+   height="73.702705mm"
+   viewBox="0 0 146.82838 73.702705"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="cycletimes.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.4503086"
+     inkscape:cx="226.15876"
+     inkscape:cy="167.20579"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Camada 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-29.64953,-98.513512)">
+    <rect
+       style="fill:#12246e;fill-opacity:1;stroke:none;stroke-width:0.273358"
+       id="rectback"
+       width="146.82838"
+       height="73.702705"
+       x="29.64953"
+       y="98.513512" />
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;fill:#12246e;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="33.305435"
+       y="118.80828"
+       id="attr1"><tspan
+         sodipodi:role="line"
+         id="tspan3850"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         x="33.305435"
+         y="118.80828">totalCycleTime: 60</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;fill:#12246e;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="39.156734"
+       y="123.56502"
+       id="target1"><tspan
+         sodipodi:role="line"
+         id="tspan3850-9"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         x="39.156734"
+         y="123.56502">Target: 40</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;fill:#12246e;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="35.064297"
+       y="152.26694"
+       id="attr3"><tspan
+         sodipodi:role="line"
+         id="tspan3850-7"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         x="35.064297"
+         y="152.26694">processTime: 30</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;fill:#12246e;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="38.769737"
+       y="157.41068"
+       id="target3"><tspan
+         sodipodi:role="line"
+         id="tspan3850-9-1"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         x="38.769737"
+         y="157.41068">Target: 30</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;fill:#12246e;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="117.52648"
+       y="118.78087"
+       id="attr2"><tspan
+         sodipodi:role="line"
+         id="tspan3850-70"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         x="117.52648"
+         y="118.78087">exitTime:5</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;fill:#12246e;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="118.61533"
+       y="123.53762"
+       id="target2"><tspan
+         sodipodi:role="line"
+         id="tspan3850-9-7"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         x="118.61533"
+         y="123.53762">Target: 5</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;fill:#12246e;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="114.00689"
+       y="152.62653"
+       id="attr4"><tspan
+         sodipodi:role="line"
+         id="tspan3850-7-7"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         x="114.00689"
+         y="152.62653">changeTime: 10</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;fill:#12246e;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="117.71233"
+       y="157.77026"
+       id="target4"><tspan
+         sodipodi:role="line"
+         id="tspan3850-9-1-1"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         x="117.71233"
+         y="157.77026">Target: 10</tspan></text>
+    <circle
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       id="circle1"
+       cx="84.558975"
+       cy="120"
+       r="12" />
+    <circle
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       id="circle3"
+       cx="84.365479"
+       cy="152"
+       r="12" />
+    <circle
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       id="circle2"
+       cx="158.15303"
+       cy="120"
+       r="12" />
+    <circle
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       id="circle4"
+       cx="158.92703"
+       cy="152"
+       r="12" />
+  </g>
+</svg>
