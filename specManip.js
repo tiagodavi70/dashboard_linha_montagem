@@ -31,7 +31,8 @@ function specManip(specRaw, attr, options=undefined) {
         //     "./simulation/CycleTimes.json" : 
         //     "./simulation/KPI.json";
 
-        let slider_value = max_;
+        let slider_value_max = max_;
+        let slider_value_min = min_;
 
         if (!options) {
             if (d3.select("#interaction-index").nodes()[0].children.length == 0) {
@@ -53,31 +54,43 @@ function specManip(specRaw, attr, options=undefined) {
                     });
             }
         }
+// Sequence generator function (commonly referred to as "range", e.g. Clojure, PHP, etc.)
+        const range = (start, stop, step) =>
+            Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + i * step);
 
-        spec.layer[1].encoding.x.axis.values = d3.range(1, max_, 5);
-        spec.layer[2].encoding.x.axis.values = d3.range(1, max_, 5);
+        // spec.layer[1].encoding.x.axis.values = range(1, max_, 5);
+        // spec.layer[2].encoding.x.axis.values = range(1, max_, 5);
 
         spec.layer[1].encoding["y"].field = attr;
         spec.layer[2].encoding["y"].field = attr;
-
-        if (max_ - min_ < 15) {
-            spec.layer[2].encoding.opacity.value = 1;
-        } else {
-            spec.layer[2].encoding.opacity.value = 0;
-        }
+        spec.layer[2].encoding["text"].field = attr;
 
         if (options) {
-            slider_value = options.index || max_;
+            slider_value_max = +options.index[1] || max_;
+            slider_value_min = +options.index[0] || min_;
             if (options.size == "tall") {
                 spec.width  = 200;
                 spec.height = 300;
             }
         } else {
-            slider_value = d3.select("#index_slider").property("value");
+            slider_value_max = d3.select("#index_slider").property("value");
         }
-        spec.transform[0].filter = `datum.index >= 0 && datum.index <= ${slider_value} && datum.station == ${station}`;
-        spec.layer[1].encoding.x.scale.domain = [1, slider_value];
-        spec.layer[2].encoding.x.scale.domain = [1, slider_value];
+        
+        if (slider_value_max - slider_value_min < 16) {
+            spec.layer[2].encoding.opacity.value = 1;
+        } else {
+            spec.layer[2].encoding.opacity.value = 0;
+        }
+
+        spec.transform[0].filter = `datum.index >= ${slider_value_min} && datum.index <= ${slider_value_max} && datum.station == ${station}`;
+        
+        spec.layer[1].encoding.x.scale.domain = [slider_value_min, slider_value_max];
+        spec.layer[2].encoding.x.scale.domain = [slider_value_min, slider_value_max];
+        spec.layer[1].encoding.x.axis.values  = range(slider_value_min, slider_value_max, Math.floor(slider_value_max/20));
+        spec.layer[2].encoding.x.axis.values  = range(slider_value_min, slider_value_max, Math.floor(slider_value_max/20));
+
+        // console.log(spec.layer[1].encoding.x.axis.values)
+
         spec.transform[1].calculate = "" + targetsjson[attr];
 
         let titles = {"oee": "%", "partCount": "pieces", "fpy": "%", "countNIO": "pieces", "productivity": "pieces / man * hour"};
